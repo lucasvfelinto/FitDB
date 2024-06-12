@@ -15,6 +15,7 @@ public class DatabaseHandler {
     public DatabaseHandler(DatabaseConnection databaseConnection) {
         this.dbConnection = databaseConnection;
     }
+    
 /*
  O método createDatabase chama o método getConnection do objeto DatabaseConnection,
  o qual retornará um objeto connection, caso a conexão seja estabelecida com sucesso.
@@ -62,6 +63,14 @@ public class DatabaseHandler {
         try (Connection connection = dbConnection.getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP DATABASE " + dbName);
+        }catch (SQLException e) {
+            System.out.println("Houve um erro ao conectar o banco de dados");
+            System.out.println(e);
+            e.printStackTrace();
         }
+    }
+
+    public void setDbConnection(DatabaseConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 }

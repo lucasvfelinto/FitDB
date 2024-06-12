@@ -12,13 +12,10 @@ public class DatabaseConfig {
     private String user;
     private String password;
 
-    public DatabaseConfig(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
-    }
-    public DatabaseConfig (){
-
+    public DatabaseConfig() {
+        this.url = ""; //definir
+        this.user = "root";
+        this.password = ""; //definir
     }
     
     public void setUrl(String url) {

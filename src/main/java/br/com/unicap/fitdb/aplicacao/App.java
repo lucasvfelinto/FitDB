@@ -1,4 +1,5 @@
 package main.java.br.com.unicap.fitdb.aplicacao;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
@@ -7,9 +8,6 @@ import main.java.br.com.unicap.fitdb.db.DatabaseHandler;
 
 public class App {
     public static void main(String[] args) {
-        String url; // iniciar com o url
-        String user = "root";
-        String password; // iniciar com a password
         String dbName = new String();
         int option = -1;
         int access = 0;
@@ -17,8 +15,8 @@ public class App {
         boolean dbExistance = false;
         Scanner input = new Scanner(System.in);
         Menu interfaci = new Menu(); //interfaci pq com e é palavra reservada
-        // DatabseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
-        DatabaseConfig infoConexao = new DatabaseConfig(url,user,password);
+        // DatabaseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
+        DatabaseConfig infoConexao = new DatabaseConfig();      
         // DatabaseConnection é um objeto que irá utilizar as informações do objeto DatabaseConfig numa instância do DriverManger
         // O DriverManager é responsável por tentar uma conexão com o SGBD mysql
         DatabaseConnection conexao = new DatabaseConnection(infoConexao);
@@ -33,11 +31,32 @@ public class App {
             }
             dbExistance = database.databaseExists (dbName); // checa existencia do banco de dados com base no nome informado
             if(dbExistance == true){                        // se existir
-                //
+                option = interfaci.menuInicial(dbName, input); // exibe o menu inicial
+                if(option == 1){                            // cadastrar
+                    
+                }else if( option == 2){                     // login
+
+                }else{  // qualquer outro input, indica exit
+
+                }
             }else{                                          // se o banco informado não existir, 
                 option = interfaci.menuDbNaoExiste(input);  // fornece a opção de tentar novamente inserir o nome ou criar o banco
                 if(option == 2){                            // opção 2 criar banco
-                    dbName = interfaci.menuCriarBanco(input); // chama o menu para criar banco
+                    //so pessoas com a informação sensivel podem criar
+                    infoConexao.setUser("");
+                    infoConexao.setPassword("");
+
+                    dbName = interfaci.menuAcesso2(input); // chama o primeiro menu para criar banco, pede para definir o nome
+                    infoConexao = interfaci.menuCriarBanco(input, infoConexao);    // chama o segundo menu para criar banco, solicita o user e password do SGBD
+                    conexao.setConfig(infoConexao);                                // atualiza as informações de conexão
+                    database.setDbConnection(conexao);                             // atualiza as informações de conexão
+                    try {
+                        database.createDatabase(dbName);                           // tenta criar o banco de dados
+                    }catch (SQLException e) {
+                        System.out.println("Houve um erro ao criar o banco de dados");
+                        System.out.println(e);
+                        e.printStackTrace();
+                    }
                 }else{
                     // nada e volta para o começo
                 }
@@ -45,15 +64,6 @@ public class App {
             access++;
         }while(systemStatus != false);
 
-    }
-
-
-
-
-
-    public void checkDatabaseExistance (DatabaseHandler database, String dbName){
-        boolean dbExistance = false;
-        dbExistance = database.databaseExists(dbName);
     }
     
 }

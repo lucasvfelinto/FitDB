@@ -1,6 +1,9 @@
 package main.java.br.com.unicap.fitdb.aplicacao;
 
 import java.util.Scanner;
+
+import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
+import main.java.br.com.unicap.fitdb.model.User;
 //IMPLEMENTAR VALIDAÇÃO DE INPUT!!!!!!!
 // Primeiro menu
 // Usuário diz o nome da db, o sistema tenta fazer uma conexão 
@@ -20,7 +23,7 @@ public class Menu {
         System.out.println("║ seguindo o exemplo a seguir:        ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  nome_do_banco_db                 ║");
+        System.out.println("║  nome_do_banco_db                   ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         dbName = input.nextLine();
@@ -42,6 +45,7 @@ public class Menu {
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         int option = input.nextInt();
+        input.nextLine();
         return option;
 
     }
@@ -56,19 +60,26 @@ public class Menu {
         dbName = input.nextLine();
         return dbName;
     }
-    public String menuCriarBanco(Scanner input){
-        String dbName = new String();
+
+    public DatabaseConfig menuCriarBanco(Scanner input, DatabaseConfig config){
+        String user = new String();
+        String password = new String();
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║ Informe o nome do Banco de dados,   ║");
-        System.out.println("║ no formato 'nome_do_banco_db':      ║");
+        System.out.println("║ Informe o usuário do SGBD           ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        dbName = input.nextLine();
-        return dbName;
+        user= input.nextLine();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe a senha SGBD                ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        password= input.nextLine();
+        config.setUser(user);
+        config.setPassword(password);
+        return config;
     }
 
     public int menuInicial(String dbName, Scanner input) {
-
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║             "+dbName+"              ║");
@@ -84,9 +95,46 @@ public class Menu {
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         int option = input.nextInt();
+        input.nextLine();
         System.out.println("\n");
-        //IMPLEMENTAR VALIDAÇÃO DE ENTRADA
         return option;
+    }
+
+    public User menuCadastro(Scanner input, User usuario){
+        String userName = new String();
+        String userEmail = new String();
+        int userAge =0;
+        char userSex;
+
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe o nome do usuário:          ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        userName = input.nextLine();
+        System.out.println("\n");
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe um e-mail para cadastrar:   ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        userEmail = input.nextLine();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe a idade do usuário:         ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        userAge = input.nextInt();
+        input.nextLine();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe o sexo do usuário:          ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        userSex = input.next().charAt(0);
+        usuario.setName(userName);
+        usuario.setEmail(userEmail);
+        usuario.setIdade(userAge);
+        usuario.setSexo(userSex);
+        System.out.println("\n");
+        return usuario;
+        //IMPLEMENTAR VALIDAÇÃO DE ENTRADA 
     }
     
 }

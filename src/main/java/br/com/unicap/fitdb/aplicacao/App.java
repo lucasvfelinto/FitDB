@@ -1,6 +1,4 @@
 package main.java.br.com.unicap.fitdb.aplicacao;
-
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
@@ -14,6 +12,7 @@ public class App {
         String password; // iniciar com a password
         String dbName = new String();
         int option = -1;
+        int access = 0;
         boolean systemStatus = true;
         boolean dbExistance = false;
         Scanner input = new Scanner(System.in);
@@ -25,23 +24,26 @@ public class App {
         DatabaseConnection conexao = new DatabaseConnection(infoConexao);
         // DataBaseHandler usa a conexão estabelecida pelo DatabaseConnection,
         DatabaseHandler database = new DatabaseHandler(conexao);
-        
-    do{
         //pergunta o nome da db para o usuário
         dbName = interfaci.menuAcesso(input);
-        dbExistance = database.databaseExists (dbName);
-        if(dbExistance == true){
-            //
-        }else{
-            option = interfaci.menuDbNaoExiste(input);
-            if(option == 1){
-                // nada
-            }else{
-                dbName = interfaci.menuCriarBanco(input);
-            }
-        }
 
-    }while(systemStatus != false);
+        do{
+            if(access > 0){
+                dbName = interfaci.menuAcesso2(input);
+            }
+            dbExistance = database.databaseExists (dbName); // checa existencia do banco de dados com base no nome informado
+            if(dbExistance == true){                        // se existir
+                //
+            }else{                                          // se o banco informado não existir, 
+                option = interfaci.menuDbNaoExiste(input);  // fornece a opção de tentar novamente inserir o nome ou criar o banco
+                if(option == 2){                            // opção 2 criar banco
+                    dbName = interfaci.menuCriarBanco(input); // chama o menu para criar banco
+                }else{
+                    // nada e volta para o começo
+                }
+            }
+            access++;
+        }while(systemStatus != false);
 
     }
 

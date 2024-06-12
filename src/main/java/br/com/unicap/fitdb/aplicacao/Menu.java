@@ -1,10 +1,6 @@
 package main.java.br.com.unicap.fitdb.aplicacao;
 
 import java.util.Scanner;
-
-import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
-import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
-import main.java.br.com.unicap.fitdb.db.DatabaseHandler;
 //IMPLEMENTAR VALIDAÇÃO DE INPUT!!!!!!!
 // Primeiro menu
 // Usuário diz o nome da db, o sistema tenta fazer uma conexão 
@@ -50,7 +46,17 @@ public class Menu {
 
     }
 
-        public String menuCriarBanco(Scanner input){
+        public String menuAcesso2(Scanner input){
+        String dbName = new String();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe o nome do Banco de dados,   ║");
+        System.out.println("║ no formato 'nome_do_banco_db':      ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        dbName = input.nextLine();
+        return dbName;
+    }
+    public String menuCriarBanco(Scanner input){
         String dbName = new String();
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║ Informe o nome do Banco de dados,   ║");

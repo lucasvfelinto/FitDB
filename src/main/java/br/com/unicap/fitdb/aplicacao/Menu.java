@@ -24,7 +24,7 @@ public class Menu {
         System.out.println("║ seguindo o exemplo a seguir:        ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  palavra_palavra_db                 ║");
+        System.out.println("║  nome_do_banco_db                 ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         dbName = input.nextLine();
@@ -50,33 +50,15 @@ public class Menu {
 
     }
 
-        public DatabaseConfig menuCriarBanco(Scanner input){
-        String user = new String();
-        String password = new String();
+        public String menuCriarBanco(Scanner input){
         String dbName = new String();
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║ Informe o usuário:                  ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("\n");
-        user = input.nextLine();
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║ Informe a senha:                    ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("\n");
-        password = input.nextLine();
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║ Informe o nome do Banco de dados,   ║");
         System.out.println("║ no formato 'nome_do_banco_db':      ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         dbName = input.nextLine();
-        DatabaseConfig config = new DatabaseConfig();
-        config.setUser(user);
-        config.setPassword(password);
-        DatabaseConnection conexao = new DatabaseConnection(config);
-        DatabaseHandler database = new DatabaseHandler(conexao);
-        database.databaseExists(config, dbName);
-        return config;
+        return dbName;
     }
 
     public int menuInicial(String dbName, Scanner input) {

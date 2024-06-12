@@ -34,7 +34,7 @@ public class DatabaseHandler {
  'UPDATE','DELETE', além de 'CREATE DATABASE' e 'DROP DATABASE'
 */
 // ERRO 
-        public boolean databaseExists(DatabaseConfig config, String dbName) {
+        public boolean databaseExists(String dbName) {
         String query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
         try (Connection connection = dbConnection.getConnection();
              Statement statement = connection.createStatement();

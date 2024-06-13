@@ -124,7 +124,7 @@ public class Menu {
         userRole = input.nextLine();
   
         usuario.setName(userName);
-        usuario.setEmail(userEmail);
+        usuario.setRole(userEmail);
         usuario.
         System.out.println("\n");
         return usuario;

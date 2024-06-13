@@ -55,6 +55,15 @@ public class Query {
         + "FOREIGN KEY (id_cliente) REFERENCES cliente(id),\n"
         + "FOREIGN KEY (id_produto) REFERENCES produto(id)\n"
         + ");\n";
+
+    String createUsersTable = "CREATE TABLE users (\n" +
+        "    id INT AUTO_INCREMENT PRIMARY KEY,\n" +
+        "    username VARCHAR(50) NOT NULL UNIQUE,\n" +
+        "    password VARCHAR(255) NOT NULL,\n" +
+        "    role ENUM('admin', 'manager', 'employee') NOT NULL,\n" +
+        "    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n" +
+    ");";
+    
     
     String insertProdutos = "INSERT INTO produto (nome, quantidade, descricao, valor) VALUES \n"
         + "('Proteína Whey', 50, 'Suplemento de proteína de soro de leite', 120.00),\n"
@@ -184,88 +193,93 @@ public class Query {
         + "('Úrsula Cunha', 'F', 29, '1995-12-22'),\n"
         + "('Vitor Menezes', 'M', 26, '1998-01-18');\n";
     
-    String createTriggers = "DELIMITER //\n"
-        + "CREATE TRIGGER atualiza_funcionario_especial\n"
+        String createTrigger1 = "CREATE TRIGGER atualiza_apos_inserir_venda\n"
         + "AFTER INSERT ON venda\n"
         + "FOR EACH ROW\n"
         + "BEGIN\n"
-        + "DECLARE total_vendas DECIMAL(10, 2);\n"
-        + "DECLARE bonus DECIMAL(10, 2);\n"
-        + "SELECT SUM(p.valor * v.quantidade) INTO total_vendas\n"
-        + "FROM venda v\n"
-        + "JOIN produto p ON v.id_produto = p.id\n"
-        + "WHERE v.id_vendedor = NEW.id_vendedor;\n"
-        + "IF total_vendas > 1000.00 THEN\n"
-        + "SET bonus = total_vendas * 0.05;\n"
-        + "INSERT INTO funcionarioespecial (id_funcionario, bonus) VALUES (NEW.id_vendedor, bonus);\n"
-        + "END IF;\n"
-        + "END;\n"
-        + "//\n"
-        + "DELIMITER ;\n"
-        + "DELIMITER //\n"
-        + "CREATE TRIGGER atualiza_cliente_especial\n"
-        + "AFTER INSERT ON venda\n"
-        + "FOR EACH ROW\n"
-        + "BEGIN\n"
-        + "DECLARE total_compras DECIMAL(10, 2);\n"
-        + "DECLARE cashback DECIMAL(10, 2);\n"
-        + "SELECT SUM(p.valor * v.quantidade) INTO total_compras\n"
-        + "FROM venda v\n"
-        + "JOIN produto p ON v.id_produto = p.id\n"
-        + "WHERE v.id_cliente = NEW.id_cliente;\n"
-        + "IF total_compras > 500.00 THEN\n"
-        + "SET cashback = total_compras * 0.02;\n"
-        + "INSERT INTO clienteespecial (id_cliente, cashback) VALUES (NEW.id_cliente, cashback);\n"
-        + "END IF;\n"
-        + "END;\n"
-        + "//\n"
-        + "DELIMITER ;\n"
-        + "DELIMITER //\n"
-        + "CREATE TRIGGER remove_cliente_especial\n"
+        + "    DECLARE total_vendas DECIMAL(10, 2);\n"
+        + "    DECLARE bonus DECIMAL(10, 2);\n"
+        + "    DECLARE total_compras DECIMAL(10, 2);\n"
+        + "    DECLARE cashback DECIMAL(10, 2);\n"
+        + "    DECLARE msg_funcionario VARCHAR(255);\n"
+        + "    DECLARE msg_cliente VARCHAR(255);\n"
+
+        + "    -- Trigger para funcionário especial\n"
+        + "    SELECT SUM(p.valor * v.quantidade) INTO total_vendas\n"
+        + "    FROM venda v\n"
+        + "    JOIN produto p ON v.id_produto = p.id\n"
+        + "    WHERE v.id_vendedor = NEW.id_vendedor;\n"
+        + "    IF total_vendas > 1000.00 THEN\n"
+        + "        SET bonus = total_vendas * 0.05;\n"
+        + "        INSERT INTO funcionarioespecial (id_funcionario, bonus) VALUES (NEW.id_vendedor, bonus);\n"
+        + "        SELECT CONCAT('Bônus total necessário: ', SUM(bonus)) INTO msg_funcionario\n"
+        + "        FROM funcionarioespecial;\n"
+        + "        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg_funcionario;\n"
+        + "    END IF;\n"
+
+        + "    -- Trigger para cliente especial\n"
+        + "    SELECT SUM(p.valor * v.quantidade) INTO total_compras\n"
+        + "    FROM venda v\n"
+        + "    JOIN produto p ON v.id_produto = p.id\n"
+        + "    WHERE v.id_cliente = NEW.id_cliente;\n"
+        + "    IF total_compras > 500.00 THEN\n"
+        + "        SET cashback = total_compras * 0.02;\n"
+        + "        INSERT INTO clienteespecial (id_cliente, cashback) VALUES (NEW.id_cliente, cashback);\n"
+        + "        SELECT CONCAT('Valor total de cashback necessário: ', SUM(cashback)) INTO msg_cliente\n"
+        + "        FROM clienteespecial;\n"
+        + "        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg_cliente;\n"
+        + "    END IF;\n"
+        + "END;\n";
+
+    String createTrigger2 = "CREATE TRIGGER remove_cliente_especial\n"
         + "AFTER UPDATE ON clienteespecial\n"
         + "FOR EACH ROW\n"
         + "BEGIN\n"
-        + "IF NEW.cashback = 0 THEN\n"
-        + "DELETE FROM clienteespecial WHERE id = NEW.id;\n"
-        + "END IF;\n"
-        + "END;\n"
-        + "//\n"
-        + "DELIMITER ;\n";
-    
+        + "    IF NEW.cashback = 0 THEN\n"
+        + "        DELETE FROM clienteespecial WHERE id = NEW.id;\n"
+        + "    END IF;\n"
+        + "END;\n";
+
+
+
+    /* 
     String createUsers = "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminpassword';\n"
         + "GRANT ALL PRIVILEGES ON loja_fit.* TO 'admin'@'localhost';\n"
         + "CREATE USER 'manager'@'localhost' IDENTIFIED BY 'managerpassword';\n"
         + "GRANT SELECT, DELETE, UPDATE ON loja_fit.* TO 'manager'@'localhost';\n"
         + "CREATE USER 'employee'@'localhost' IDENTIFIED BY 'employeepassword';\n"
         + "GRANT INSERT, SELECT ON loja_fit.* TO 'employee'@'localhost';\n";
-    
-    String createViews = "CREATE VIEW produtos_mais_vendidos AS\n"
+    */
+    String createView1 = "CREATE VIEW produtos_mais_vendidos AS\n"
         + "SELECT p.nome, COUNT(v.id) AS total_vendas\n"
         + "FROM produto p\n"
         + "JOIN venda v ON p.id = v.id_produto\n"
         + "GROUP BY p.nome\n"
-        + "ORDER BY total_vendas DESC;\n"
-        + "CREATE VIEW valor_ganho_produtos AS\n"
+        + "ORDER BY total_vendas DESC;\n";
+
+    String createView2 = "CREATE VIEW valor_ganho_produtos AS\n"
         + "SELECT p.nome, SUM(p.valor * v.quantidade) AS total_valor\n"
         + "FROM produto p\n"
         + "JOIN venda v ON p.id = v.id_produto\n"
-        + "GROUP BY p.nome;\n"
-        + "CREATE VIEW clientes_mais_compraram AS\n"
+        + "GROUP BY p.nome;\n";
+
+    String createView3 = "CREATE VIEW clientes_mais_compraram AS\n"
         + "SELECT c.nome AS cliente, SUM(p.valor * v.quantidade) AS total_compras\n"
         + "FROM cliente c\n"
         + "JOIN venda v ON c.id = v.id_cliente\n"
         + "JOIN produto p ON v.id_produto = p.id\n"
         + "GROUP BY c.nome\n"
-        + "ORDER BY total_compras DESC;\n"
-        + "CREATE VIEW vendas_mensais AS\n"
+        + "ORDER BY total_compras DESC;\n";
+
+    String createView4 = "CREATE VIEW vendas_mensais AS\n"
         + "SELECT YEAR(v.data) AS ano, MONTH(v.data) AS mes, SUM(p.valor * v.quantidade) AS total_vendas\n"
         + "FROM venda v\n"
         + "JOIN produto p ON v.id_produto = p.id\n"
         + "GROUP BY YEAR(v.data), MONTH(v.data)\n"
         + "ORDER BY ano, mes;\n";
+
     
-    String createProcedures = "DELIMITER //\n"
-        + "CREATE PROCEDURE realizar_venda(IN id_vendedor INT, IN id_cliente INT, IN id_produto INT, IN quantidade INT)\n"
+    String createProcedure1 = "CREATE PROCEDURE realizar_venda(IN id_vendedor INT, IN id_cliente INT, IN id_produto INT, IN quantidade INT)\n"
         + "BEGIN\n"
         + "DECLARE produto_quantidade INT;\n"
         + "SELECT quantidade INTO produto_quantidade FROM produto WHERE id = id_produto;\n"
@@ -275,26 +289,23 @@ public class Query {
         + "ELSE\n"
         + "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Quantidade insuficiente no estoque';\n"
         + "END IF;\n"
-        + "END //\n"
-        + "DELIMITER ;\n"
-        + "DELIMITER //\n"
-        + "CREATE PROCEDURE reajuste_salarial_positivo(IN percentual DECIMAL(5,2), IN categoria ENUM('vendedor', 'gerente', 'CEO'))\n"
+        + "END;\n";
+
+String createProcedure2 = "CREATE PROCEDURE reajuste_salarial_positivo(IN percentual DECIMAL(5,2), IN categoria ENUM('vendedor', 'gerente', 'CEO'))\n"
         + "BEGIN\n"
         + "UPDATE funcionario\n"
         + "SET salario = salario + (salario * (percentual / 100))\n"
         + "WHERE cargo = categoria;\n"
-        + "END //\n"
-        + "DELIMITER ;\n"
-        + "DELIMITER //\n"
-        + "CREATE PROCEDURE reajuste_salarial_negativo(IN percentual DECIMAL(5,2), IN categoria ENUM('vendedor', 'gerente', 'CEO'))\n"
+        + "END;\n";
+
+String createProcedure3 = "CREATE PROCEDURE reajuste_salarial_negativo(IN percentual DECIMAL(5,2), IN categoria ENUM('vendedor', 'gerente', 'CEO'))\n"
         + "BEGIN\n"
         + "UPDATE funcionario\n"
         + "SET salario = salario - (salario * (percentual / 100))\n"
         + "WHERE cargo = categoria;\n"
-        + "END //\n"
-        + "DELIMITER ;\n"
-        + "DELIMITER //\n"
-        + "CREATE PROCEDURE sorteio_premiacao()\n"
+        + "END;\n";
+
+String createProcedure4 = "CREATE PROCEDURE sorteio_premiacao()\n"
         + "BEGIN\n"
         + "DECLARE cliente_id INT;\n"
         + "DECLARE is_special BOOLEAN;\n"
@@ -307,10 +318,9 @@ public class Query {
         + "SET premio = 100.00;\n"
         + "END IF;\n"
         + "INSERT INTO premios (id_cliente, valor) VALUES (cliente_id, premio);\n"
-        + "END //\n"
-        + "DELIMITER ;\n"
-        + "DELIMITER //\n"
-        + "CREATE PROCEDURE Estatisticas()\n"
+        + "END;\n";
+
+String createProcedure5 = "CREATE PROCEDURE Estatisticas()\n"
         + "BEGIN\n"
         + "SELECT p.nome AS 'Produto mais vendido'\n"
         + "FROM produto p\n"
@@ -424,8 +434,9 @@ public class Query {
         + "GROUP BY YEAR(v.data), MONTH(v.data)\n"
         + "ORDER BY total_vendido ASC\n"
         + "LIMIT 1;\n"
-        + "END //\n"
-        + "DELIMITER ;\n";
+        + "END;\n";
+
+
 
         public Query(){
             String [] queries = {
@@ -436,15 +447,30 @@ public class Query {
                 createFuncionarioEspecialTable,
                 createProdutoTable,
                 createVendaTable,
+                createUsersTable,
                 insertProdutos,
                 insertFuncionarios,
                 insertClientes,
-                createTriggers,
-                createUsers,
-                createViews,
-                createProcedures
+                createView1,
+                createView2,
+                createView3,
+                createView4,
+                createProcedure1,
+                createProcedure2,
+                createProcedure3,
+                createProcedure4,
+                createProcedure5,
+                createTrigger1,
+                createTrigger2
             };
             this.sqlQueries = queries;
         }
         
 }
+
+/*
+ *              createTriggers,
+                createUsers,
+                createViews,
+                createProcedures
+ */

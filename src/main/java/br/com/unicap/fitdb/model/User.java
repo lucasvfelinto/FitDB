@@ -4,15 +4,12 @@ public class User {
     private int id;
     private String name;
     private String email;
+    private String userRole;
     private int idade;
     private char sexo;
 
-    public User(int id,String name, String email, int idade, char sexo) {
-        this.id = id; // db gera?
-        this.name = name;
-        this.email = email;
-        this.idade = idade;
-        this.sexo = sexo;
+    public User() {
+
     }
 
     // public generateID? Ou o banco de dados faz isso automaticamente?

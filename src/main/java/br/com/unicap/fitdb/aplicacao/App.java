@@ -3,8 +3,10 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
+import main.java.br.com.unicap.fitdb.dao.UserDAO;
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
 import main.java.br.com.unicap.fitdb.db.DatabaseHandler;
+import main.java.br.com.unicap.fitdb.model.User;
 
 public class App {
     public static void main(String[] args) {
@@ -22,11 +24,13 @@ public class App {
         DatabaseConnection conexao = new DatabaseConnection(infoConexao);
         // DataBaseHandler usa a conexão estabelecida pelo DatabaseConnection,
         DatabaseHandler database = new DatabaseHandler(conexao);
+        UserDAO userOperations = new UserDAO(conexao);
         //pergunta o nome da db para o usuário
         dbName = interfaci.menuAcesso(input);
         Query queries = new Query();
 
         do{
+            userOperations.setDatabaseConnection(conexao);// atualiza para garantir que está na conexão certa
             if(access > 0){
                 dbName = interfaci.menuAcesso2(input);
             }
@@ -34,7 +38,9 @@ public class App {
             if(dbExistance == true){                        // se existir
                 option = interfaci.menuInicial(dbName, input); // exibe o menu inicial
                 if(option == 1){                            // cadastrar
-                    //FOCO
+                    User usuarioCadastro = new User();
+                    usuarioCadastro = interfaci.menuCadastro(input, usuarioCadastro);
+    
                 }else if( option == 2){                     // login
                     //FOCO
                 }else{  // qualquer outro input, indica exit

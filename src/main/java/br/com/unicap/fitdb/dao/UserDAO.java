@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
-import main.java.br.com.unicap.fitdb.model.User;
 
 /*
  O DAO (Database Access Object) é um padrão de design utilizado para abstrair e encapsular 
@@ -24,34 +23,54 @@ import main.java.br.com.unicap.fitdb.model.User;
  que por sua vez utiliza UserDAO.
  */
 
-public class UserDAO {
-    private DatabaseConnection databaseConnection;
 
-    public UserDAO(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
+ public class UserDAO {
+     private DatabaseConnection dbConnection;
+ 
+     public UserDAO(DatabaseConnection dbConnection) {
+         this.dbConnection = dbConnection;
+     }
+ 
+     // Método para criar um novo usuário
+     public boolean createUser(String username, String password, String role) {
+         String query = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+         try (Connection connection = dbConnection.getConnection();
+              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             preparedStatement.setString(1, username);
+             preparedStatement.setString(2, password);
+             preparedStatement.setString(3, role);
+             int result = preparedStatement.executeUpdate();
+             return result > 0;
+         } catch (SQLException e) {
+             System.out.println("Erro ao criar o usuário");
+             e.printStackTrace();
+             return false;
+         }
+     }
+     
+ 
+     // Método para autenticar um usuário
+     public boolean authenticateUser(String username, String password) {
+         String query = "SELECT password FROM users WHERE username = ?";
+         try (Connection connection = dbConnection.getConnection();
+              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             preparedStatement.setString(1, username);
+             try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                 if (resultSet.next()) {
+                     String storedPassword = resultSet.getString("password");
+                     return storedPassword.equals(password);
+                 }
+             }
+         } catch (SQLException e) {
+             System.out.println("Erro ao autenticar o usuário");
+             e.printStackTrace();
+         }
+         return false;
+     }
+ 
 
-    public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.executeUpdate();
-        }
-    }
-
-    public User getUser(int id) throws SQLException { // nao entendi
-        String sql = "SELECT * FROM users WHERE id = ?";
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new User(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("email"));
-            }
-        }
-        return null;
+    public void setDatabaseConnection(DatabaseConnection databaseConnection) {
+        this.dbConnection = databaseConnection;
     }
 
     // Outros métodos CRUD (update, delete)

@@ -100,10 +100,15 @@ public class Menu {
         return option;
     }
 
-    public User menuCadastro(Scanner input, User usuario){
+    public User menuCadastro(Scanner input, User usuario) {
         String userName = new String();
         String userEmail = new String();
+<<<<<<< Updated upstream
         String userRole = new String();
+=======
+        int userAge = 0;
+        char userSex;
+>>>>>>> Stashed changes
 
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║ Informe o nome do usuário:          ║");
@@ -130,5 +135,6 @@ public class Menu {
         return usuario;
         //IMPLEMENTAR VALIDAÇÃO DE ENTRADA 
     }
+    
     
 }

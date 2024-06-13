@@ -3,7 +3,7 @@ package main.java.br.com.unicap.fitdb.model;
 public class User {
     private String username;
     private String password;
-    private String email;
+    private String role;
 
     // Construtor sem parâmetros
     public User() {}
@@ -12,7 +12,7 @@ public class User {
     public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
-        this.email = role;
+        this.role = role;
     }
 
     public String getUsername() {
@@ -31,12 +31,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getRole() {
+        return role;
     }
 
-    public void setEmail(String role) {
-        this.email = role;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
 

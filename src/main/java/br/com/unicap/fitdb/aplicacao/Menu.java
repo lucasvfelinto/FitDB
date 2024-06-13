@@ -103,8 +103,7 @@ public class Menu {
     public User menuCadastro(Scanner input, User usuario){
         String userName = new String();
         String userEmail = new String();
-        int userAge =0;
-        char userSex;
+        String userRole = new String();
 
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║ Informe o nome do usuário:          ║");
@@ -117,21 +116,16 @@ public class Menu {
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         userEmail = input.nextLine();
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║ Informe a idade do usuário:         ║");
-        System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        userAge = input.nextInt();
-        input.nextLine();
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║ Informe o sexo do usuário:          ║");
-        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("╔══════════════════════════════════════════════╗");
+        System.out.println("║ Informe o papel (admin, manager, employee):  ║");
+        System.out.println("╚══════════════════════════════════════════════╝");
         System.out.println("\n");
-        userSex = input.next().charAt(0);
+        userRole = input.nextLine();
+  
         usuario.setName(userName);
-        usuario.setEmail(userEmail);
-        usuario.setIdade(userAge);
-        usuario.setSexo(userSex);
+        usuario.setRole(userEmail);
+        usuario.
         System.out.println("\n");
         return usuario;
         //IMPLEMENTAR VALIDAÇÃO DE ENTRADA 

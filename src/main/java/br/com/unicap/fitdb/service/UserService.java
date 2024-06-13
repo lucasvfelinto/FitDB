@@ -14,7 +14,7 @@ public class UserService {
 
     public void addUser(User user) throws SQLException {
         // Validação e lógica de negócios
-        if (user.getUsername() == null || user.getEmail() == null) {
+        if (user.getUsername() == null || user.getRole() == null) {
             throw new IllegalArgumentException("Nome e email são obrigatórios");
         }
         userDAO.createUser(user);

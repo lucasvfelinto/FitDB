@@ -1,6 +1,5 @@
 -- Criar o banco de dados
-CREATE DATABASE FitDB;
-USE FitDB;
+USE loja_fit;
 
 -- Tabela de Clientes
 CREATE TABLE cliente (

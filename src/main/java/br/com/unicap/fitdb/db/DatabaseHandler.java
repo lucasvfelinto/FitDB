@@ -1,5 +1,8 @@
 package main.java.br.com.unicap.fitdb.db;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -11,6 +14,13 @@ import java.sql.SQLException;
 // A classe possui um atributo dbConnection que recebe uma instância da classe databaseConnection
 public class DatabaseHandler {
     private DatabaseConnection dbConnection;
+    String createClienteTable = "CREATE TABLE cliente (\n"
+    + "id INT AUTO_INCREMENT PRIMARY KEY,\n"
+    + "nome VARCHAR(100) NOT NULL,\n"
+    + "sexo ENUM('M', 'F', 'O') NOT NULL,\n"
+    + "idade INT NOT NULL,\n"
+    + "nascimento DATE NOT NULL\n"
+    + ");";
 
     public DatabaseHandler(DatabaseConnection databaseConnection) {
         this.dbConnection = databaseConnection;
@@ -69,6 +79,17 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+    public void executeQueries(String[] queries) {
+        try (Connection conn = dbConnection.getConnection();
+             Statement stmt = conn.createStatement()) {
+            for (String query : queries) {
+                stmt.execute(query);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public void setDbConnection(DatabaseConnection dbConnection) {
         this.dbConnection = dbConnection;

@@ -13,9 +13,9 @@ public class DatabaseConfig {
     private String password;
 
     public DatabaseConfig() {
-        this.url = ""; //definir
+        this.url = "jdbc:mysql://localhost:3306"; //definir
         this.user = "root";
-        this.password = ""; //definir
+        this.password = "Mvgs426955#"; //definir
     }
     
     public void setUrl(String url) {

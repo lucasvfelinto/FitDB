@@ -24,6 +24,7 @@ public class App {
         DatabaseHandler database = new DatabaseHandler(conexao);
         //pergunta o nome da db para o usuário
         dbName = interfaci.menuAcesso(input);
+        Query queries = new Query();
 
         do{
             if(access > 0){
@@ -33,9 +34,9 @@ public class App {
             if(dbExistance == true){                        // se existir
                 option = interfaci.menuInicial(dbName, input); // exibe o menu inicial
                 if(option == 1){                            // cadastrar
-                    
+                    //FOCO
                 }else if( option == 2){                     // login
-
+                    //FOCO
                 }else{  // qualquer outro input, indica exit
 
                 }
@@ -52,6 +53,7 @@ public class App {
                     database.setDbConnection(conexao);                             // atualiza as informações de conexão
                     try {
                         database.createDatabase(dbName);                           // tenta criar o banco de dados
+                        database.executeQueries(queries.sqlQueries); // queries automatizadas de inicialização do e-commerce
                     }catch (SQLException e) {
                         System.out.println("Houve um erro ao criar o banco de dados");
                         System.out.println(e);

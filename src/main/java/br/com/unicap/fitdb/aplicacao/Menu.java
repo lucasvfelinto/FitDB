@@ -82,7 +82,7 @@ public class Menu {
     public int menuInicial(String dbName, Scanner input) {
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
-        System.out.println("║             "+dbName+"              ║");
+        System.out.println("║             "+dbName+"             ");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║                                     ║");

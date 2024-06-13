@@ -20,7 +20,7 @@ public class Menu {
         System.out.println("║ seguindo o exemplo a seguir:        ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  nome_do_banco_db                 ║");
+        System.out.println("║  nome_do_banco_db                   ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         dbName = input.nextLine();

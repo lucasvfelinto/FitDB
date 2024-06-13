@@ -56,7 +56,7 @@ public class Query {
         + "FOREIGN KEY (id_produto) REFERENCES produto(id)\n"
         + ");\n";
 
-    String createUsersTable = "CREATE TABLE users (\n" +
+    String createUsersTable = "CREATE TABLE usuarios (\n" +
         "    id INT AUTO_INCREMENT PRIMARY KEY,\n" +
         "    username VARCHAR(50) NOT NULL UNIQUE,\n" +
         "    password VARCHAR(255) NOT NULL,\n" +

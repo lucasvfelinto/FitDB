@@ -49,6 +49,16 @@ public class DatabaseHandler {
         }
         return false; // Database does not exist
     }
+    public void executeSingleQuery(String query) {
+        try (Connection connection = dbConnection.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute(query);
+        } catch (SQLException e) {
+            System.out.println("Houve um erro ao executar a query: " + query);
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
 
     public void createDatabase(String dbName) throws SQLException { // recebe uma string referente ao nome do banco de dados
         try (Connection connection = dbConnection.getConnection();

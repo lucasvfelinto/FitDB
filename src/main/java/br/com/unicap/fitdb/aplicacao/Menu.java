@@ -41,7 +41,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  Escolha uma opção:                 ║");
+        System.out.println("║  Escolha uma opção(numero):         ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         int option = input.nextInt();
@@ -91,7 +91,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  Escolha uma opção:                 ║");
+        System.out.println("║  Escolha uma opção(numero):         ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         int option = input.nextInt();
@@ -102,7 +102,7 @@ public class Menu {
 
     public User menuCadastro(Scanner input, User usuario){
         String userName = new String();
-        String userEmail = new String();
+        String userPassword = new String();
         String userRole = new String();
 
         System.out.println("╔═════════════════════════════════════╗");
@@ -111,24 +111,104 @@ public class Menu {
         System.out.println("\n");
         userName = input.nextLine();
         System.out.println("\n");
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║ Informe um e-mail para cadastrar:   ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("\n");
-        userEmail = input.nextLine();
-        System.out.println("\n");
         System.out.println("╔══════════════════════════════════════════════╗");
         System.out.println("║ Informe o papel (admin, manager, employee):  ║");
         System.out.println("╚══════════════════════════════════════════════╝");
         System.out.println("\n");
         userRole = input.nextLine();
-  
-        usuario.setName(userName);
-        usuario.setRole(userEmail);
-        usuario.
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe a senha do usuário:         ║");
+        System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
+        userPassword = input.nextLine();
+  
+        usuario.setUsername(userName);
+        usuario.setRole(userRole);
+        usuario.setPassword(userPassword);
         return usuario;
         //IMPLEMENTAR VALIDAÇÃO DE ENTRADA 
     }
     
+    public User menuLogin(Scanner input, User usuario){
+        String userName = new String();
+        String userPassword = new String();
+
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe o nome do usuário:          ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        userName = input.nextLine();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║ Informe a senha do usuário:         ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        userPassword = input.nextLine();
+        usuario.setUsername(userName);
+        usuario.setPassword(userPassword);
+        return usuario;
+        //IMPLEMENTAR VALIDAÇÃO DE ENTRADA 
+    }
+    public String menuAdministrador(Scanner input){
+        String choice = new String();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║         Menu Administrador          ║");
+        System.out.println("╠═════════════════════════════════════╣");
+        System.out.println("║                                     ║");
+        System.out.println("║  1. Gerenciar banco de dados        ║");
+        System.out.println("║  2. Gerenciar funcionários          ║");
+        System.out.println("║  3. Estatísticas de vendas          ║");
+        System.out.println("║  X. Sair                            ║");
+        System.out.println("║                                     ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║  Escolha uma opção(numero):         ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        choice = input.nextLine();
+        return choice;
+    }
+
+    public String menuGerente(Scanner input){
+        String choice = new String();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║             Menu Gerente            ║");
+        System.out.println("╠═════════════════════════════════════╣");
+        System.out.println("║                                     ║");
+        System.out.println("║  1. Buscar                          ║");
+        System.out.println("║  2. Editar                          ║");
+        System.out.println("║  3. Apagar                          ║");
+        System.out.println("║  X. Sair                            ║");
+        System.out.println("║                                     ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║  Escolha uma opção(numero):         ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        choice = input.nextLine();
+        return choice;
+
+    }
+    public String menuFuncionario(Scanner input){
+        String choice = new String();
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║           Menu Funcionário          ║");
+        System.out.println("╠═════════════════════════════════════╣");
+        System.out.println("║                                     ║");
+        System.out.println("║  1. Registrar Venda                 ║");
+        System.out.println("║  2. Consultar Vendas                ║");
+        System.out.println("║  3. Cadastrar Cliente               ║");
+        System.out.println("║  4. Cadastrar Produto               ║");
+        System.out.println("║  X. Sair                            ║");
+        System.out.println("║                                     ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║  Escolha uma opção:                 ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        choice = input.nextLine();
+        return choice;
+
+    }
+
+
 }

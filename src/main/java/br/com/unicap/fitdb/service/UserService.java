@@ -1,7 +1,5 @@
 package main.java.br.com.unicap.fitdb.service;
 
-import java.sql.SQLException;
-
 import main.java.br.com.unicap.fitdb.dao.UserDAO;
 import main.java.br.com.unicap.fitdb.model.User;
 
@@ -12,22 +10,14 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public void addUser(User user) throws SQLException {
-        // Validação e lógica de negócios
-        if (user.getUsername() == null || user.getRole() == null) {
-            throw new IllegalArgumentException("Nome e email são obrigatórios");
-        }
-        userDAO.createUser(user);
+    public boolean registerUser(User usuario) {
+        return userDAO.createUser(usuario.getUsername(), usuario.getPassword(), usuario.getRole());
     }
 
-    public User getUser(int id) throws SQLException {
-        User user = userDAO.getUser(id);
-        // Lógica de negócios adicional
-        if (user == null) {
-            throw new SQLException("Usuário não encontrado");
-        }
-        return user;
+    public boolean loginUser(User usuario) {
+        return userDAO.loginUser(usuario.getUsername(), usuario.getPassword());
     }
-
-    // Outros métodos de lógica de negócios
+    public String getUserRole(String username) {
+        return userDAO.getUserRole(username);
+    }
 }

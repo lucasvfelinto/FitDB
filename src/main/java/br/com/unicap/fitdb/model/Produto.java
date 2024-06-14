@@ -1,15 +1,15 @@
 package main.java.br.com.unicap.fitdb.model;
 
+import java.math.BigDecimal;
+
 public class Produto {
     private int id;
     private String nome;
     private int quantidade;
     private String descricao;
-    private double valor;
+    private BigDecimal valor;
 
-    public Produto() {}
-
-    public Produto(int id, String nome, int quantidade, String descricao, double valor) {
+    public Produto(int id, String nome, int quantidade, String descricao, BigDecimal valor) {
         this.id = id;
         this.nome = nome;
         this.quantidade = quantidade;
@@ -17,6 +17,7 @@ public class Produto {
         this.valor = valor;
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -49,11 +50,19 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = new BigDecimal(valor);
+    }
+
+    public String getValorAsString() {
+        return valor.toString();
     }
 }

@@ -5,82 +5,85 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
-import main.java.br.com.unicap.fitdb.model.Cliente;
+import main.java.br.com.unicap.fitdb.model.Venda;
 
-public class ClienteDAO {
+public class VendaDAO {
     private DatabaseConnection databaseConnection;
 
-    public ClienteDAO(DatabaseConnection databaseConnection) {
+    public VendaDAO(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
     }
 
-    public boolean createCliente(Cliente cliente) {
-        String sql = "INSERT INTO cliente (nome, sexo, idade, nascimento) VALUES (?, ?, ?, ?)";
+    public boolean createVenda(Venda venda) {
+        String sql = "INSERT INTO venda (id_vendedor, id_cliente, id_produto, quantidade, data) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, cliente.getNome());
-            statement.setString(2, cliente.getSexo());
-            statement.setInt(3, cliente.getIdade());
-            statement.setDate(4, java.sql.Date.valueOf(cliente.getNascimento()));
+            statement.setInt(1, venda.getIdVendedor());
+            statement.setInt(2, venda.getIdCliente());
+            statement.setInt(3, venda.getIdProduto());
+            statement.setInt(4, venda.getQuantidade());
+            statement.setDate(5, java.sql.Date.valueOf(venda.getData()));
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
-            System.out.println("Erro ao criar o cliente!");
+            System.out.println("Erro ao criar a venda!");
             e.printStackTrace();
             return false;
         }
     }
 
-    public Cliente getClienteById(int id) {
-        String sql = "SELECT * FROM cliente WHERE id = ?";
+    public Venda getVendaById(int id) {
+        String sql = "SELECT * FROM venda WHERE id = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new Cliente(
+                    return new Venda(
                         resultSet.getInt("id"),
-                        resultSet.getString("nome"),
-                        resultSet.getString("sexo"),
-                        resultSet.getInt("idade"),
-                        resultSet.getDate("nascimento").toLocalDate()
+                        resultSet.getInt("id_vendedor"),
+                        resultSet.getInt("id_cliente"),
+                        resultSet.getInt("id_produto"),
+                        resultSet.getInt("quantidade"),
+                        resultSet.getDate("data").toLocalDate()
                     );
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao obter o cliente!");
+            System.out.println("Erro ao obter a venda!");
             e.printStackTrace();
         }
         return null;
     }
 
-    public boolean updateCliente(Cliente cliente) {
-        String sql = "UPDATE cliente SET nome = ?, sexo = ?, idade = ?, nascimento = ? WHERE id = ?";
+    public boolean updateVenda(Venda venda) {
+        String sql = "UPDATE venda SET id_vendedor = ?, id_cliente = ?, id_produto = ?, quantidade = ?, data = ? WHERE id = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, cliente.getNome());
-            statement.setString(2, cliente.getSexo());
-            statement.setInt(3, cliente.getIdade());
-            statement.setDate(4, java.sql.Date.valueOf(cliente.getNascimento()));
-            statement.setInt(5, cliente.getId());
+            statement.setInt(1, venda.getIdVendedor());
+            statement.setInt(2, venda.getIdCliente());
+            statement.setInt(3, venda.getIdProduto());
+            statement.setInt(4, venda.getQuantidade());
+            statement.setDate(5, java.sql.Date.valueOf(venda.getData()));
+            statement.setInt(6, venda.getId());
             int rowsUpdated = statement.executeUpdate();
             return rowsUpdated > 0;
         } catch (SQLException e) {
-            System.out.println("Erro ao atualizar o cliente!");
+            System.out.println("Erro ao atualizar a venda!");
             e.printStackTrace();
             return false;
         }
     }
 
-    public boolean deleteCliente(int id) {
-        String sql = "DELETE FROM cliente WHERE id = ?";
+    public boolean deleteVenda(int id) {
+        String sql = "DELETE FROM venda WHERE id = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             int rowsDeleted = statement.executeUpdate();
             return rowsDeleted > 0;
         } catch (SQLException e) {
-            System.out.println("Erro ao deletar o cliente!");
+            System.out.println("Erro ao deletar a venda!");
             e.printStackTrace();
             return false;
         }

@@ -1,6 +1,8 @@
 package main.java.br.com.unicap.fitdb.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Venda {
     private int id;
@@ -8,11 +10,12 @@ public class Venda {
     private int idCliente;
     private int idProduto;
     private int quantidade;
-    private Date data;
+    private LocalDate data;
 
-    public Venda() {}
+    // Formato de data esperado (ex: "dd/MM/yyyy")
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Venda(int id, int idVendedor, int idCliente, int idProduto, int quantidade, Date data) {
+    public Venda(int id, int idVendedor, int idCliente, int idProduto, int quantidade, LocalDate data) {
         this.id = id;
         this.idVendedor = idVendedor;
         this.idCliente = idCliente;
@@ -21,6 +24,7 @@ public class Venda {
         this.data = data;
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -61,11 +65,23 @@ public class Venda {
         this.quantidade = quantidade;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public void setData(String data) {
+        try {
+            this.data = LocalDate.parse(data, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Data inválida. Use o formato dd/MM/yyyy.");
+        }
+    }
+
+    public String getDataAsString() {
+        return data.format(formatter);
     }
 }

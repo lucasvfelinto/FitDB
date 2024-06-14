@@ -1,22 +1,28 @@
 package main.java.br.com.unicap.fitdb.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Cliente {
     private int id;
     private String nome;
     private String sexo;
     private int idade;
-    private String nascimento;
+    private LocalDate nascimento;
 
-    public Cliente() {}
+    // Formato de data esperado (ex: "dd/MM/yyyy")
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Cliente(int id, String nome, String sexo, int idade, String nascimento) {
+    public Cliente(int id, String nome, String sexo, int idade, LocalDate nascimento) {
         this.id = id;
         this.nome = nome;
         this.sexo = sexo;
         this.idade = idade;
         this.nascimento = nascimento;
     }
-    
+
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -49,11 +55,23 @@ public class Cliente {
         this.idade = idade;
     }
 
-    public String getNascimento() {
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        try {
+            this.nascimento = LocalDate.parse(nascimento, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Data de nascimento inválida. Use o formato dd/MM/yyyy.");
+        }
+    }
+
+    public String getNascimentoAsString() {
+        return nascimento.format(formatter);
     }
 }

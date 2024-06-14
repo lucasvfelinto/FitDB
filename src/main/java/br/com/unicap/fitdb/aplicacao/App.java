@@ -6,17 +6,24 @@ import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
 import main.java.br.com.unicap.fitdb.dao.UserDAO;
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
 import main.java.br.com.unicap.fitdb.db.DatabaseHandler;
-import main.java.br.com.unicap.fitdb.model.User;
-import main.java.br.com.unicap.fitdb.service.UserService;
+import main.java.br.com.unicap.fitdb.aplicacao.Menu;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        String url; // iniciar com o url
+        String user = "root";
+        String password; // iniciar com a password
         String dbName = new String();
         int option = -1;
         int access = 0;
         boolean systemStatus = true;
         boolean dbExistance = false;
         Scanner input = new Scanner(System.in);
+        Menu menu = new Menu(); //interfaci pq com e é palavra reservada
+        menu.menuDbImportado();
+    
+        // DatabseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
+        DatabaseConfig infoConexao = new DatabaseConfig(url,user,password);
         Menu interfaci = new Menu(); //interfaci pq com e é palavra reservada
         // DatabaseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
         DatabaseConfig infoConexao = new DatabaseConfig();      
@@ -27,9 +34,13 @@ public class App {
         DatabaseHandler database = new DatabaseHandler(conexao);
         UserDAO userOperations = new UserDAO(conexao);
         //pergunta o nome da db para o usuário
+
+        dbName = menu.menuAcesso(input);
+
         dbName = interfaci.menuAcesso(input);
         Query queries = new Query();
         UserService userControl = new UserService(userOperations);
+
 
 
         //IMPLEMENTAR SAIDA DO PROGRAMA BASEADA EM INPUT!!!!!!

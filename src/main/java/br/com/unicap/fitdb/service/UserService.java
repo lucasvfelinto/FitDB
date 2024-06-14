@@ -15,7 +15,11 @@ public class UserService {
     }
 
     public boolean loginUser(User usuario) {
-        return userDAO.loginUser(usuario.getUsername(), usuario.getPassword());
+        boolean isLoggedIn = userDAO.loginUser(usuario.getUsername(), usuario.getPassword());
+        if (isLoggedIn) {
+            Session.setCurrentUser(usuario);
+        }
+        return isLoggedIn;
     }
     public String getUserRole(String username) {
         return userDAO.getUserRole(username);

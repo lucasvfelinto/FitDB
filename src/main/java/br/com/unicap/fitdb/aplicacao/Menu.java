@@ -2,8 +2,6 @@ package main.java.br.com.unicap.fitdb.aplicacao;
 
 import java.util.Scanner;
 
-import main.java.br.com.unicap.fitdb.model.User;
-
 //IMPLEMENTAR VALIDAÇÃO DE INPUT!!!!!!!
 // Primeiro menu
 // Usuário diz o nome da db, o sistema tenta fazer uma conexão 
@@ -109,7 +107,7 @@ public class Menu {
         dados[1] = input.nextLine();
         System.out.println("║ - Informe o nome do banco de dados  ║");
         dados[3] = input.nextLine();
-        System.out.println("║  0. Voltar                          ║");
+        System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
 
@@ -159,7 +157,7 @@ public class Menu {
         System.out.println("║ - Selecione o cargo:                ║");
         System.out.println("║   employee, manager, admin          ║");
         dados[2] = input.nextLine();
-        System.out.println("║  0. Voltar                          ║");
+        System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return dados;
@@ -177,7 +175,8 @@ public class Menu {
         return input.nextInt();
     }
 
-    public String menuLogin() {
+    public String[] menuLogin() {
+        String[] dados = new String[2];
         input.nextLine(); // Consumir nova linha
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
@@ -185,13 +184,13 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o usuario                 ║");
-        String usuario = input.nextLine();
+        dados[0] = input.nextLine();
         System.out.println("║ - Informe a senha                   ║");
-        String senha = input.nextLine();
-        System.out.println("║  0. Voltar                          ║");
+        dados[1] = input.nextLine();
+        System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return usuario + ";" + senha;
+        return dados;
     }
 
     public int menuGerente() {
@@ -226,71 +225,28 @@ public class Menu {
         System.out.println("\n");
         return input.nextInt();
     }
-    public void estatisticas (){
+    public int menuEstatisticasVendas(){
         System.out.println("╔═══════════════════════════════════════════════════╗");
         System.out.println("║                                                   ║");
         System.out.println("║                Estatísticas de Vendas             ║");
         System.out.println("║                                                   ║");
         System.out.println("╠═══════════════════════════════════════════════════╣");
         System.out.println("║ 1. Produto mais vendido                           ║");
-        System.out.println("║ 2. Vendedor Associado ao produto mais vendido     ║");
-        System.out.println("║ 3. Valor ganho com o produto mais vendido         ║");
-        System.out.println("║ 4. Meses de mais e de menos vendas                ║");
-        System.out.println("║    do produto mais vendido                        ║");
+        System.out.println("║ 2. Vendedor Associado ao Produto mais vendido     ║");
+        System.out.println("║ 3. Valor ganho com o Produto mais vendido         ║");
+        System.out.println("║ 4. Meses de mais e de menos vendas do produto     ║");
+        System.out.println("║    vendido                                        ║");
         System.out.println("║ 5. Valor ganho com o produto mais vendido         ║");
         System.out.println("║ 6. Produto menos vendido                          ║");
         System.out.println("║ 7. Valor ganho com o produto menos vendido        ║");
-        System.out.println("║ 8. Meses de mais e de menos vendas                ║");
-        System.out.println("║    do produto menos vendido                       ║");
-        System.out.println("║ 9. Voltar                                         ║");
-        System.out.println("╚═══════════════════════════════════════════════════╝");
-
-    }
-
-    public void buscas(){
-        System.out.println("╔═══════════════════════════════════════════════════╗");
-        System.out.println("║                                                   ║");
-        System.out.println("║                      Buscas                       ║");
-        System.out.println("║                                                   ║");
-        System.out.println("╠═══════════════════════════════════════════════════╣");
-        System.out.println("║ 1. Buscar cliente                                 ║");
-        System.out.println("║ 2. Buscar venda                                   ║");
-        System.out.println("║ 3. Buscar produto                                 ║");
-        System.out.println("║ 4. Buscar Funcionário                             ║");
+        System.out.println("║ 8. Meses de mais e de menos vendas do produto     ║");
+        System.out.println("║    menos vendido                                  ║");
+        System.out.println("║ 9. Todas as opções acima                          ║");
         System.out.println("║ 0. Voltar                                         ║");
         System.out.println("╚═══════════════════════════════════════════════════╝");
-
+        System.out.println("\n");
+        return input.nextInt();
     }
-
-    public void apagarOpcoes(){
-        System.out.println("╔═══════════════════════════════════════════════════╗");
-        System.out.println("║                                                   ║");
-        System.out.println("║                      Apagar                       ║");
-        System.out.println("║                                                   ║");
-        System.out.println("╠═══════════════════════════════════════════════════╣");
-        System.out.println("║ 1. Apagar cliente                                 ║");
-        System.out.println("║ 2. Apagar venda                                   ║");
-        System.out.println("║ 3. Apagar produto                                 ║");
-        System.out.println("║ 4. Apagar Funcionário                             ║");
-        System.out.println("║ 0. Voltar                                         ║");
-        System.out.println("╚═══════════════════════════════════════════════════╝");
-
-    }
-    public void edicao(){
-        System.out.println("╔═══════════════════════════════════════════════════╗");
-        System.out.println("║                                                   ║");
-        System.out.println("║                      Editar                       ║");
-        System.out.println("║                                                   ║");
-        System.out.println("╠═══════════════════════════════════════════════════╣");
-        System.out.println("║ 1. Editar cliente                                 ║");
-        System.out.println("║ 2. Editar venda                                   ║");
-        System.out.println("║ 3. Editar produto                                 ║");
-        System.out.println("║ 4. Editar Funcionário                             ║");
-        System.out.println("║ 0. Voltar                                         ║");
-        System.out.println("╚═══════════════════════════════════════════════════╝");
-
-    }
-
 
     public int menuAdministrador() {
         System.out.println("╔═════════════════════════════════════╗");
@@ -320,25 +276,6 @@ public class Menu {
         return input.nextInt();
     }
 
-    public int menuEstatisticasVendas() {
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║                                     ║");
-        System.out.println("║       Estatísticas de Vendas        ║");
-        System.out.println("║                                     ║");
-        System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║  1. Produto mais vendido            ║");
-        System.out.println("║  2. Vendedor Associado ao Produto   ║");
-        System.out.println("║  3. Valor ganho com o Produto       ║");
-        System.out.println("║  4. Meses de Mais e Menos Vendas    ║");
-        System.out.println("║  5. Produto menos vendido           ║");
-        System.out.println("║  6. Valor ganho com Produto Menos   ║");
-        System.out.println("║  7. Todas as opções acima           ║");
-        System.out.println("║  0. Voltar                          ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("\n");
-        return input.nextInt();
-    }
-
     public int menuGerenciarBancoDeDados() {
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
@@ -355,26 +292,27 @@ public class Menu {
         return input.nextInt();
     }
 
-    public String menuCadastrarCliente() {
+    public String[] menuCadastrarCliente() {
+        String[] dados = new String[4];
         input.nextLine(); // Consumir nova linha
-        String nome, idade, nascimento, sexo;
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Cadastrar Cliente          ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o nome do Cliente         ║");
-        nome = input.nextLine();
+        dados[0] = input.nextLine();
         System.out.println("║ - Informe a Idade                   ║");
-        idade = input.nextLine();
-        System.out.println("║ - Informe a data de nascimento (aaaa-mm-dd)  ║");
-        nascimento = input.nextLine();
+        dados[1] = input.nextLine();
+        System.out.println("║ - Informe a data de nascimento      ║");
+        System.out.println("║   (aaaa-mm-dd)                      ║");
+        dados[2] = input.nextLine();
         System.out.println("║ - Informe o sexo (M, F, O)          ║");
-        sexo = input.nextLine();
+        dados[3] = input.nextLine();
         System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return nome + ";" + idade + ";" + nascimento + ";" + sexo;
+        return dados;
     }
 
     public int menuErroCadastrarCliente() {
@@ -391,45 +329,46 @@ public class Menu {
         return input.nextInt();
     }
 
-    public String menuCadastrarProduto(){
-        String nome, valor, quantidade, descricao;
+    public String[] menuCadastrarProduto() {
+        String[] dados = new String[4];
+        input.nextLine(); // Consumir nova linha
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Cadastrar Produto          ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o nome do Produto         ║");
-        nome = input.nextLine();
+        dados[0] = input.nextLine();
         System.out.println("║ - Informe o Valor (ex. 200.96)      ║");
-        valor = input.nextLine();
+        dados[1] = input.nextLine();
         System.out.println("║ - Informe a quantidade              ║");
-        quantidade = input.nextLine();
+        dados[2] = input.nextLine();
         System.out.println("║ - Informe a descrição               ║");
-        descricao = input.nextLine();
-        System.out.println("║  0. Voltar                          ║");
+        dados[3] = input.nextLine();
+        System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return nome + ";" + valor + ";" + quantidade + ";" + descricao;
+        return dados;
     }
 
-    public String menuRegistrarVenda() {
+    public String[] menuRegistrarVenda() {
+        String[] dados = new String[3];
         input.nextLine(); // Consumir nova linha
-        String idProduto, quantidade, idCliente;
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Registrar Venda            ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o ID do produto           ║");
-        idProduto = input.nextLine();
+        dados[0] = input.nextLine();
         System.out.println("║ - Informe a quantidade do produto   ║");
-        quantidade = input.nextLine();
+        dados[2] = input.nextLine();
         System.out.println("║ - Informe o ID do Cliente           ║");
-        idCliente = input.nextLine();
-        System.out.println("║  0. Voltar                          ║");
+        dados[3] = input.nextLine();
+        System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return idProduto + ";" + quantidade + ";" + idCliente;
+        return dados;
     }
 
     public int menuErroRegistrarVenda() {
@@ -558,100 +497,68 @@ public class Menu {
         return input.nextInt();
     }
 
-    public String menuEditarCliente() {
-        input.nextLine(); // Consumir nova linha
-        String id, nome, sexo, idade, nascimento;
+    public int menuEditarCliente() {
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Editar Cliente             ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║ - Informe o ID do Cliente           ║");
-        id = input.nextLine();
         System.out.println("║  1. Editar o Nome                   ║");
-        nome = input.nextLine();
         System.out.println("║  2. Editar o Sexo                   ║");
-        sexo = input.nextLine();
         System.out.println("║  3. Editar a Idade                  ║");
-        idade = input.nextLine();
         System.out.println("║  4. Editar a Data de Nascimento     ║");
-        nascimento = input.nextLine();
         System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return id + ";" + nome + ";" + sexo + ";" + idade + ";" + nascimento;
+        return input.nextInt();
     }
 
-    public String menuEditarVenda() {
-        input.nextLine(); // Consumir nova linha
-        String id, funcionario, cliente, produto, quantidade;
+    public int menuEditarVenda() {
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Editar Venda               ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║ - Informe o ID da Venda             ║");
-        id = input.nextLine();
         System.out.println("║  1. Editar o Funcionario            ║");
-        funcionario = input.nextLine();
         System.out.println("║  2. Editar o Cliente                ║");
-        cliente = input.nextLine();
         System.out.println("║  3. Editar o Produto                ║");
-        produto = input.nextLine();
         System.out.println("║  4. Editar a Quantidade             ║");
-        quantidade = input.nextLine();
         System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return id + ";" + funcionario + ";" + cliente + ";" + produto + ";" + quantidade;
+        return input.nextInt();
     }
 
-    public String menuEditarProduto() {
-        input.nextLine(); // Consumir nova linha
-        String id, nome, valor, quantidade;
+    public int menuEditarProduto() {
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Editar Produto             ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║ - Informe o ID do Produto           ║");
-        id = input.nextLine();
         System.out.println("║  1. Editar o Nome                   ║");
-        nome = input.nextLine();
         System.out.println("║  2. Editar o Valor                  ║");
-        valor = input.nextLine();
         System.out.println("║  3. Editar a Quantidade             ║");
-        quantidade = input.nextLine();
         System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return id + ";" + nome + ";" + valor + ";" + quantidade;
+        return input.nextInt();
     }
 
-    public String menuEditarFuncionario() {
-        input.nextLine(); // Consumir nova linha
-        String id, nome, cargo, sexo, idade, nascimento;
+    public int menuEditarFuncionario() {
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║        Editar Funcionário           ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║ - Informe o ID do Funcionário       ║");
-        id = input.nextLine();
         System.out.println("║  1. Editar o Nome                   ║");
-        nome = input.nextLine();
         System.out.println("║  2. Editar o Cargo                  ║");
-        cargo = input.nextLine();
         System.out.println("║  3. Editar o Sexo                   ║");
-        sexo = input.nextLine();
         System.out.println("║  4. Editar a Idade                  ║");
-        idade = input.nextLine();
         System.out.println("║  5. Editar a Data de Nascimento     ║");
-        nascimento = input.nextLine();
         System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return id + ";" + nome + ";" + cargo + ";" + sexo + ";" + idade + ";" + nascimento;
+        return input.nextInt();
     }
 
     public String menuApagarCliente() {
@@ -664,10 +571,10 @@ public class Menu {
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o ID do Cliente           ║");
         id = input.nextLine();
-        System.out.println("║ - Deseja apagar permanentemente     ║");
-        System.out.println("║   este Cliente?                     ║");
-        System.out.println("║  1. Sim                             ║");
-        System.out.println("║  0. Voltar                          ║");
+        // System.out.println("║ - Deseja apagar permanentemente     ║");
+        // System.out.println("║   este Cliente?                     ║");
+        // System.out.println("║  1. Sim                             ║");
+        // System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;
@@ -683,10 +590,10 @@ public class Menu {
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o ID da Venda             ║");
         id = input.nextLine();
-        System.out.println("║ - Deseja apagar permanentemente     ║");
-        System.out.println("║   esta Venda?                       ║");
-        System.out.println("║  1. Sim                             ║");
-        System.out.println("║  0. Voltar                          ║");
+        // System.out.println("║ - Deseja apagar permanentemente     ║");
+        // System.out.println("║   esta Venda?                       ║");
+        // System.out.println("║  1. Sim                             ║");
+        // System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;
@@ -702,10 +609,10 @@ public class Menu {
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o ID do Produto           ║");
         id = input.nextLine();
-        System.out.println("║ - Deseja apagar permanentemente     ║");
-        System.out.println("║   este Produto?                     ║");
-        System.out.println("║  1. Sim                             ║");
-        System.out.println("║  0. Voltar                          ║");
+        // System.out.println("║ - Deseja apagar permanentemente     ║");
+        // System.out.println("║   este Produto?                     ║");
+        // System.out.println("║  1. Sim                             ║");
+        // System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;
@@ -721,10 +628,10 @@ public class Menu {
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o ID do Funcionário       ║");
         id = input.nextLine();
-        System.out.println("║ - Deseja apagar permanentemente     ║");
-        System.out.println("║   este Funcionário?                 ║");
-        System.out.println("║  1. Sim                             ║");
-        System.out.println("║  0. Voltar                          ║");
+        // System.out.println("║ - Deseja apagar permanentemente     ║");
+        // System.out.println("║   este Funcionário?                 ║");
+        // System.out.println("║  1. Sim                             ║");
+        // System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;

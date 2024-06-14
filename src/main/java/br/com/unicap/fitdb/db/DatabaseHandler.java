@@ -1,5 +1,8 @@
 package main.java.br.com.unicap.fitdb.db;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -40,6 +43,48 @@ public class DatabaseHandler {
      * 'UPDATE','DELETE', além de 'CREATE DATABASE' e 'DROP DATABASE'
      */
     // ERRO
+
+    public boolean executeSqlScript(String filePath, String dbName)throws IOException, SQLException {
+        try (Connection connection = dbConnection.getConnection();
+                Statement useStatement = connection.createStatement();
+                BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                Statement statement = connection.createStatement()) {
+            useStatement.execute("USE " + dbName);
+            String line;
+            StringBuilder sql = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                sql.append(line);
+                // Verifica se a linha termina com ';' para executar o comando completo
+                if (line.trim().endsWith(";")) {
+                    statement.execute(sql.toString());
+                    sql.setLength(0); // Limpa o StringBuilder para a próxima instrução
+                }
+            }
+
+            return true;
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean createDatabaseIfNotExists(String dbName) {
+        if (!databaseExists(dbName)) {
+            try {
+                executeSqlScript("src/DB/Script_FitDB.sql", dbName);
+                return true;
+            } catch (IOException e) {
+                System.out.println("Erro de IO ao executar o script SQL: " + e.getMessage());
+                e.printStackTrace();
+            } catch (SQLException e) {
+                System.out.println("Erro de SQL ao executar o script SQL: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
     public boolean databaseExists(String dbName) {
         String query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
         try (Connection connection = dbConnection.getConnection();

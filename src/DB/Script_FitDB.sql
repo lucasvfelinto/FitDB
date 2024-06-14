@@ -1,5 +1,6 @@
 -- Criar o banco de dados
-USE loja_fit;
+CREATE DATABASE FitDB;
+USE FitDB;
 
 -- Tabela de Clientes
 CREATE TABLE cliente (
@@ -526,5 +527,3 @@ END //
 -- -- Alterar a tabela cliente para adicionar restrição ENUM para sexo
 -- ALTER TABLE cliente
 -- MODIFY COLUMN sexo ENUM('M', 'F', 'O') NOT NULL;
-
-

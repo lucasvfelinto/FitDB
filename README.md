@@ -5,7 +5,7 @@
 
 - José Franklin Alencar Dantas
 - Marcus Gonçalves
-- Marcus Vinicius Gonçalves
+- Lucas Felinto
 
 Repositorio destinado ao projeto da disciplina de banco de dados II
 

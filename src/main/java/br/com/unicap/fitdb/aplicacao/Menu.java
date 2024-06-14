@@ -2,6 +2,8 @@ package main.java.br.com.unicap.fitdb.aplicacao;
 
 import java.util.Scanner;
 
+import main.java.br.com.unicap.fitdb.model.User;
+
 //IMPLEMENTAR VALIDAÇÃO DE INPUT!!!!!!!
 // Primeiro menu
 // Usuário diz o nome da db, o sistema tenta fazer uma conexão 
@@ -9,50 +11,36 @@ import java.util.Scanner;
 // se não conseguir vai para o menu de criar db
 public class Menu {
     Scanner input = new Scanner(System.in);
-        public int menuAcessoInicial (){
+    String dbName = "";
+
+    public void exibirCabecalho() {
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║                                     ║");
         System.out.println("║     Gerenciamento de e-commerce     ║");
-        System.out.println("║                                     ║");
-        System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║ Bem vindo!                          ║");
-        System.out.println("║ Para iniciar o gerenciamento de seu ║");
-        System.out.println("║ negócio, selecione uma opção a      ║");
-        System.out.println("║ seguir:                             ║");
         System.out.println("╚═════════════════════════════════════╝");
+    }
+    public int menuAcessoInicial() {
+        exibirCabecalho();
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║  1. Entrar num DB existente         ║");
         System.out.println("║  2. Importar o DB existente         ║");
         System.out.println("║  3. Criar um DB                     ║");
         System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("use loja_fit");
         System.out.println("\n");
-        int op = input.nextInt();
-        System.out.println("\n");
-        return op;
+        return input.nextInt();
     }
-    public String menuDbExistente (){
+    public String menuDbExistente() {
+        exibirCabecalho();
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║     Gerenciamento de e-commerce     ║");
-        System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║                                     ║");
-        System.out.println("║ Para iniciar o gerenciamento de seu ║");
-        System.out.println("║ negócio, informe o nome de seu DB   ║");
-        System.out.println("║ exatamente como foi resgitrada, como║");
-        System.out.println("║ no exemplo a seguir:                ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  nome_do_seu_db                     ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("\n");
-        String dbName = input.nextLine();
-        return dbName;
+        System.out.println("║  Informe o nome do DB existente:    ║");
+        System.out.println("╚═════════════════════════════════════╝\n");
+
+        input.nextLine(); // Consumir nova linha pendente
+        return input.nextLine();
     }
 
-    public void menuDbImportado () throws InterruptedException{
+    public void menuDbImportado() throws InterruptedException {
+        exibirCabecalho();
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║     Gerenciamento de e-commerce     ║");
-        System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║                                     ║");
         System.out.println("║ Importando DB FitDB, a partir do    ║");
         System.out.println("║ script criado pelo grupo, localizado║");
@@ -72,7 +60,7 @@ public class Menu {
     }
 
     public int menuAcessoDb(String dbName) {
-
+        exibirCabecalho();
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║             "+dbName+"              ║");
@@ -85,12 +73,8 @@ public class Menu {
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║  Escolha uma opção(numero):         ║");
-        System.out.println("╚═════════════════════════════════════╝");
-        System.out.println("\n");
-        int option = input.nextInt();
-        System.out.println("\n");
-        //IMPLEMENTAR VALIDAÇÃO DE ENTRADA
-        return option;
+        System.out.println("╚═════════════════════════════════════╝\n");      
+        return input.nextInt();
     }
     //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
@@ -111,23 +95,25 @@ public class Menu {
         return input.nextInt();
     }
 
-    public String menuCriarBanco() {
+    public String[] menuCriarBanco() {
+        String[] dados = new String[3];
         input.nextLine(); // Consumir nova linha
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
         System.out.println("║          Criar Banco de Dados       ║");
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
-        System.out.println("║ - Informe o usuário                 ║");
-        String user = input.nextLine();
-        System.out.println("║ - Informe a senha                   ║");
-        String password = input.nextLine();
+        System.out.println("║ - Informe o usuário root            ║");
+        dados[0] = input.nextLine(); 
+        System.out.println("║ - Informe a senha root              ║");
+        dados[1] = input.nextLine();
         System.out.println("║ - Informe o nome do banco de dados  ║");
-        String dbName = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        dados[3] = input.nextLine();
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return dbName;
+
+        return dados;
     }
 
 
@@ -138,7 +124,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║  1. Tentar Novamente                ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -152,13 +138,14 @@ public class Menu {
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║  1. Cadastrar                       ║");
         System.out.println("║  2. Login                           ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
     }
 
-    public String menuCadastro() {
+    public String[] menuCadastroUser() {
+        String[] dados = new String[3];
         input.nextLine(); // Consumir nova linha
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║                                     ║");
@@ -166,16 +153,28 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║ - Informe o nome                    ║");
-        String nome = input.nextLine();
+        dados[0] = input.nextLine();
         System.out.println("║ - Informe a senha                   ║");
-        String senha = input.nextLine();
+        dados[1] = input.nextLine();
         System.out.println("║ - Selecione o cargo:                ║");
         System.out.println("║   employee, manager, admin          ║");
-        String cargo = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        dados[2] = input.nextLine();
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
-        return nome + ";" + senha + ";" + cargo;
+        return dados;
+    }
+    public int menuErroCadastrarUsuario() {
+        System.out.println("╔═════════════════════════════════════╗");
+        System.out.println("║                                     ║");
+        System.out.println("║      Erro ao Cadastrar Usuario      ║");
+        System.out.println("║                                     ║");
+        System.out.println("╠═════════════════════════════════════╣");
+        System.out.println("║  1. Tentar Novamente                ║");
+        System.out.println("║  0. Voltar                          ║");
+        System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("\n");
+        return input.nextInt();
     }
 
     public String menuLogin() {
@@ -189,7 +188,7 @@ public class Menu {
         String usuario = input.nextLine();
         System.out.println("║ - Informe a senha                   ║");
         String senha = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return usuario + ";" + senha;
@@ -204,7 +203,7 @@ public class Menu {
         System.out.println("║  1. Buscar                          ║");
         System.out.println("║  2. Editar                          ║");
         System.out.println("║  3. Apagar                          ║");
-        System.out.println("║  X. Sair                            ║");
+        System.out.println("║  0. Sair                            ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -222,7 +221,7 @@ public class Menu {
         System.out.println("║  4. Consultar Cliente               ║");
         System.out.println("║  5. Cadastrar Produto               ║");
         System.out.println("║  6. Consultar Produto               ║");
-        System.out.println("║  X. Sair                            ║");
+        System.out.println("║  0. Sair                            ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -258,7 +257,7 @@ public class Menu {
         System.out.println("║ 2. Buscar venda                                   ║");
         System.out.println("║ 3. Buscar produto                                 ║");
         System.out.println("║ 4. Buscar Funcionário                             ║");
-        System.out.println("║ X. Voltar                                         ║");
+        System.out.println("║ 0. Voltar                                         ║");
         System.out.println("╚═══════════════════════════════════════════════════╝");
 
     }
@@ -273,7 +272,7 @@ public class Menu {
         System.out.println("║ 2. Apagar venda                                   ║");
         System.out.println("║ 3. Apagar produto                                 ║");
         System.out.println("║ 4. Apagar Funcionário                             ║");
-        System.out.println("║ X. Voltar                                         ║");
+        System.out.println("║ 0. Voltar                                         ║");
         System.out.println("╚═══════════════════════════════════════════════════╝");
 
     }
@@ -287,7 +286,7 @@ public class Menu {
         System.out.println("║ 2. Editar venda                                   ║");
         System.out.println("║ 3. Editar produto                                 ║");
         System.out.println("║ 4. Editar Funcionário                             ║");
-        System.out.println("║ X. Voltar                                         ║");
+        System.out.println("║ 0. Voltar                                         ║");
         System.out.println("╚═══════════════════════════════════════════════════╝");
 
     }
@@ -302,7 +301,7 @@ public class Menu {
         System.out.println("║  1. Gerenciar Banco de Dados        ║");
         System.out.println("║  2. Gerenciar Funcionarios          ║");
         System.out.println("║  3. Estatísticas de Vendas          ║");
-        System.out.println("║  X. Sair                            ║");
+        System.out.println("║  0. Sair                            ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -315,7 +314,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║  1. Reajuste Salarial               ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -334,7 +333,7 @@ public class Menu {
         System.out.println("║  5. Produto menos vendido           ║");
         System.out.println("║  6. Valor ganho com Produto Menos   ║");
         System.out.println("║  7. Todas as opções acima           ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -350,7 +349,7 @@ public class Menu {
         System.out.println("║  2. Cadastrar Produto               ║");
         System.out.println("║  3. Cadastrar Cliente               ║");
         System.out.println("║  4. Visualizar Dados                ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -372,7 +371,7 @@ public class Menu {
         nascimento = input.nextLine();
         System.out.println("║ - Informe o sexo (M, F, O)          ║");
         sexo = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return nome + ";" + idade + ";" + nascimento + ";" + sexo;
@@ -386,7 +385,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║  1. Tentar novamente                ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -407,7 +406,7 @@ public class Menu {
         quantidade = input.nextLine();
         System.out.println("║ - Informe a descrição               ║");
         descricao = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return nome + ";" + valor + ";" + quantidade + ";" + descricao;
@@ -427,7 +426,7 @@ public class Menu {
         quantidade = input.nextLine();
         System.out.println("║ - Informe o ID do Cliente           ║");
         idCliente = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return idProduto + ";" + quantidade + ";" + idCliente;
@@ -441,7 +440,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╠═════════════════════════════════════╣");
         System.out.println("║  1. Tentar novamente                ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -457,7 +456,7 @@ public class Menu {
         System.out.println("║  2. Pesquise pelo Cliente           ║");
         System.out.println("║  3. Pesquise pelo Produto           ║");
         System.out.println("║  4. Pesquise pela Quantidade        ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -473,7 +472,7 @@ public class Menu {
         System.out.println("║  2. Pesquise pelo Sexo              ║");
         System.out.println("║  3. Pesquise pela Idade             ║");
         System.out.println("║  4. Pesquise pela Data de Nascimento║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -488,7 +487,7 @@ public class Menu {
         System.out.println("║  1. Pesquise pelo Nome              ║");
         System.out.println("║  2. Pesquise pelo Valor             ║");
         System.out.println("║  3. Pesquise pela Quantidade        ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -505,7 +504,7 @@ public class Menu {
         System.out.println("║  3. Pesquise pelo Sexo              ║");
         System.out.println("║  4. Pesquise pela Idade             ║");
         System.out.println("║  5. Pesquise pela Data de Nascimento║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -521,7 +520,7 @@ public class Menu {
         System.out.println("║  2. Buscar Venda                    ║");
         System.out.println("║  3. Buscar Produto                  ║");
         System.out.println("║  4. Buscar Funcionário              ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -537,7 +536,7 @@ public class Menu {
         System.out.println("║  2. Editar Venda                    ║");
         System.out.println("║  3. Editar Produto                  ║");
         System.out.println("║  4. Editar Funcionário              ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -553,7 +552,7 @@ public class Menu {
         System.out.println("║  2. Apagar Venda                    ║");
         System.out.println("║  3. Apagar Produto                  ║");
         System.out.println("║  4. Apagar Funcionário              ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return input.nextInt();
@@ -577,7 +576,7 @@ public class Menu {
         idade = input.nextLine();
         System.out.println("║  4. Editar a Data de Nascimento     ║");
         nascimento = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id + ";" + nome + ";" + sexo + ";" + idade + ";" + nascimento;
@@ -601,7 +600,7 @@ public class Menu {
         produto = input.nextLine();
         System.out.println("║  4. Editar a Quantidade             ║");
         quantidade = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id + ";" + funcionario + ";" + cliente + ";" + produto + ";" + quantidade;
@@ -623,7 +622,7 @@ public class Menu {
         valor = input.nextLine();
         System.out.println("║  3. Editar a Quantidade             ║");
         quantidade = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id + ";" + nome + ";" + valor + ";" + quantidade;
@@ -649,7 +648,7 @@ public class Menu {
         idade = input.nextLine();
         System.out.println("║  5. Editar a Data de Nascimento     ║");
         nascimento = input.nextLine();
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id + ";" + nome + ";" + cargo + ";" + sexo + ";" + idade + ";" + nascimento;
@@ -668,7 +667,7 @@ public class Menu {
         System.out.println("║ - Deseja apagar permanentemente     ║");
         System.out.println("║   este Cliente?                     ║");
         System.out.println("║  1. Sim                             ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;
@@ -687,7 +686,7 @@ public class Menu {
         System.out.println("║ - Deseja apagar permanentemente     ║");
         System.out.println("║   esta Venda?                       ║");
         System.out.println("║  1. Sim                             ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;
@@ -706,7 +705,7 @@ public class Menu {
         System.out.println("║ - Deseja apagar permanentemente     ║");
         System.out.println("║   este Produto?                     ║");
         System.out.println("║  1. Sim                             ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;
@@ -725,7 +724,7 @@ public class Menu {
         System.out.println("║ - Deseja apagar permanentemente     ║");
         System.out.println("║   este Funcionário?                 ║");
         System.out.println("║  1. Sim                             ║");
-        System.out.println("║  X. Voltar                          ║");
+        System.out.println("║  0. Voltar                          ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         return id;

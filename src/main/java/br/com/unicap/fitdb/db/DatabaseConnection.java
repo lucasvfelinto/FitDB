@@ -17,6 +17,7 @@ public class DatabaseConnection {
     public DatabaseConnection(DatabaseConfig config) {
         this.config = config;
     }
+    
 /*
  DriverManager é uma classe fornecida pela API JDBC que gerencia um conjunto de drivers de banco de dados. 
  O driver JDBC traduz as chamadas da API JDBC para comandos específicos do banco de dados utilizado.
@@ -36,6 +37,10 @@ public class DatabaseConnection {
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
+    }
+
+    public void setConfig(DatabaseConfig config) {
+        this.config = config;
     }
     
 

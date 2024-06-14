@@ -1,6 +1,9 @@
 package main.java.br.com.unicap.fitdb.aplicacao;
 
 import java.util.Scanner;
+
+import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
+import main.java.br.com.unicap.fitdb.model.User;
 //IMPLEMENTAR VALIDAÇÃO DE INPUT!!!!!!!
 // Primeiro menu
 // Usuário diz o nome da db, o sistema tenta fazer uma conexão 
@@ -24,6 +27,7 @@ public class Menu {
         System.out.println("║  2. Importar o DB existente         ║");
         System.out.println("║  3. Criar um DB                     ║");
         System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("use loja_fit");
         System.out.println("\n");
         int op = input.nextInt();
         System.out.println("\n");
@@ -82,7 +86,7 @@ public class Menu {
         System.out.println("║                                     ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  Escolha uma opção:                 ║");
+        System.out.println("║  Escolha uma opção(numero):         ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         int option = input.nextInt();
@@ -127,6 +131,7 @@ public class Menu {
         System.out.println("\n");
         return dbName;
     }
+
 
     public int menuErroCriarBanco() {
         System.out.println("╔═════════════════════════════════════╗");

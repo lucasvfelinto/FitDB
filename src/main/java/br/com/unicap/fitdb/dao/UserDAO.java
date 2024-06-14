@@ -1,28 +1,10 @@
 package main.java.br.com.unicap.fitdb.dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
-import main.java.br.com.unicap.fitdb.model.User;
-
-/*
- O DAO (Database Access Object) é um padrão de design utilizado para abstrair e encapsular 
- todas as interações com a fonte de dados. Ele oculta os detalhes específicos da tecnologia 
- de persistência do restante da aplicação. Isso permite que outras partes do código interajam 
- com os dados sem precisar conhecer os detalhes de como esses dados são armazenados ou recuperados.
- 
- Os DAOs operam sobre objetos de modelo que representam os dados da aplicação. Neste caso, 
- 'UserDAO' operar sobre objetos User.
-
- Os serviços utilizam os DAOs para executar operações de negócio. De modo que, 'UserService' usa
- um UserDAO para acessar dados de usuário, aplicar regras de negócio e coordenar operações mais complexas.
-
- Os controladores interagem com a camada de serviço para responder às solicitações do usuário. 
- Eles não interagem diretamente com os DAOs. Por exemplo, um UserController pode chamar métodos de UserService, 
- que por sua vez utiliza UserDAO.
- */
 
 public class UserDAO {
     private DatabaseConnection databaseConnection;
@@ -31,29 +13,55 @@ public class UserDAO {
         this.databaseConnection = databaseConnection;
     }
 
-    public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
+    public boolean createUser(String username, String password, String role) {
+        String sql = "INSERT INTO usuarios (username, password, role) VALUES (?, ?, ?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.executeUpdate();
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setString(3, role);
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao criar o usuário!");
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public User getUser(int id) throws SQLException { // nao entendi
-        String sql = "SELECT * FROM users WHERE id = ?";
+    public boolean loginUser(String username, String password) {
+        String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new User(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("email"));
+            statement.setString(1, username);
+            statement.setString(2, password);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
             }
+        } catch (SQLException e) {
+            System.out.println("Erro ao efetuar login!");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void setDatabaseConnection(DatabaseConnection conexao) {
+        this.databaseConnection = conexao;
+    }
+
+    public String getUserRole(String username) {
+        String sql = "SELECT role FROM usuarios WHERE username = ?";
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("role");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
-
-    // Outros métodos CRUD (update, delete)
 }
-

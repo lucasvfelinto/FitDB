@@ -1,0 +1,7 @@
+{
+    "symbols.hidesExplorerArrows": false,
+    "workbench.iconTheme": "symbols",
+    "java.project.referencedLibraries": [
+        "lib/mysql-connector-j-8.4.0.jar"
+    ]
+}

@@ -12,13 +12,10 @@ public class DatabaseConfig {
     private String user;
     private String password;
 
-    public DatabaseConfig(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
-    }
-    public DatabaseConfig (){
-
+    public DatabaseConfig() {
+        this.url = "jdbc:mysql://localhost:3306"; 
+        this.user = "root";
+        this.password = "Mvgs426955#"; 
     }
     
     public void setUrl(String url) {

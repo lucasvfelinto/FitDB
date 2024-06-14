@@ -1,17 +1,23 @@
 package main.java.br.com.unicap.fitdb.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Funcionario {
     private int id;
     private String nome;
     private int idade;
     private String sexo;
     private String cargo;
-    private double salario;
-    private String nascimento;
+    private BigDecimal salario;
+    private LocalDate nascimento;
 
-    public Funcionario() {}
+    // Formato de data esperado (ex: "dd/MM/yyyy")
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Funcionario(int id, String nome, int idade, String sexo, String cargo, double salario, String nascimento) {
+    public Funcionario(int id, String nome, int idade, String sexo, String cargo, BigDecimal salario, LocalDate nascimento) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
@@ -20,7 +26,8 @@ public class Funcionario {
         this.salario = salario;
         this.nascimento = nascimento;
     }
-   
+
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -61,19 +68,39 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public double getSalario() {
+    public BigDecimal getSalario() {
         return salario;
     }
 
-    public void setSalario(double salario) {
+    public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
 
-    public String getNascimento() {
+    public void setSalario(String salario) {
+        this.salario = new BigDecimal(salario);
+    }
+
+    public String getSalarioAsString() {
+        return salario.toString();
+    }
+
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        try {
+            this.nascimento = LocalDate.parse(nascimento, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Data de nascimento inválida. Use o formato dd/MM/yyyy.");
+        }
+    }
+
+    public String getNascimentoAsString() {
+        return nascimento.format(formatter);
     }
 }

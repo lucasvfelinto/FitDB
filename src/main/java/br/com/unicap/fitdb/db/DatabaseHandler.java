@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
-
 import java.sql.SQLException;
 
 // A classe possui um atributo dbConnection que recebe uma instância da classe databaseConnection
@@ -15,6 +13,7 @@ public class DatabaseHandler {
     public DatabaseHandler(DatabaseConnection databaseConnection) {
         this.dbConnection = databaseConnection;
     }
+    
 /*
  O método createDatabase chama o método getConnection do objeto DatabaseConnection,
  o qual retornará um objeto connection, caso a conexão seja estabelecida com sucesso.
@@ -50,6 +49,16 @@ public class DatabaseHandler {
         }
         return false; // Database does not exist
     }
+    public void executeSingleQuery(String query) {
+        try (Connection connection = dbConnection.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute(query);
+        } catch (SQLException e) {
+            System.out.println("Houve um erro ao executar a query: " + query);
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
 
     public void createDatabase(String dbName) throws SQLException { // recebe uma string referente ao nome do banco de dados
         try (Connection connection = dbConnection.getConnection();
@@ -62,6 +71,25 @@ public class DatabaseHandler {
         try (Connection connection = dbConnection.getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP DATABASE " + dbName);
+        }catch (SQLException e) {
+            System.out.println("Houve um erro ao conectar o banco de dados");
+            System.out.println(e);
+            e.printStackTrace();
         }
+    }
+    public void executeQueries(String[] queries) {
+        try (Connection conn = dbConnection.getConnection();
+             Statement stmt = conn.createStatement()) {
+            for (String query : queries) {
+                stmt.execute(query);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void setDbConnection(DatabaseConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 }

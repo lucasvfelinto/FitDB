@@ -2,8 +2,6 @@ package main.java.br.com.unicap.fitdb.aplicacao;
 
 import java.util.Scanner;
 
-import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
-import main.java.br.com.unicap.fitdb.model.User;
 //IMPLEMENTAR VALIDAÇÃO DE INPUT!!!!!!!
 // Primeiro menu
 // Usuário diz o nome da db, o sistema tenta fazer uma conexão 

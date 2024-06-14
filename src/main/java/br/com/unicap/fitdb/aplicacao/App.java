@@ -6,13 +6,11 @@ import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
 import main.java.br.com.unicap.fitdb.dao.UserDAO;
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
 import main.java.br.com.unicap.fitdb.db.DatabaseHandler;
+import main.java.br.com.unicap.fitdb.service.UserService;
 import main.java.br.com.unicap.fitdb.aplicacao.Menu;
 
 public class App {
     public static void main(String[] args) throws InterruptedException {
-        String url; // iniciar com o url
-        String user = "root";
-        String password; // iniciar com a password
         String dbName = new String();
         int option = -1;
         int access = 0;
@@ -20,11 +18,6 @@ public class App {
         boolean dbExistance = false;
         Scanner input = new Scanner(System.in);
         Menu menu = new Menu(); //interfaci pq com e é palavra reservada
-        menu.menuDbImportado();
-    
-        // DatabseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
-        DatabaseConfig infoConexao = new DatabaseConfig(url,user,password);
-        Menu interfaci = new Menu(); //interfaci pq com e é palavra reservada
         // DatabaseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
         DatabaseConfig infoConexao = new DatabaseConfig();      
         // DatabaseConnection é um objeto que irá utilizar as informações do objeto DatabaseConfig numa instância do DriverManger
@@ -34,13 +27,10 @@ public class App {
         DatabaseHandler database = new DatabaseHandler(conexao);
         UserDAO userOperations = new UserDAO(conexao);
         //pergunta o nome da db para o usuário
-
-        dbName = menu.menuAcesso(input);
-
-        dbName = interfaci.menuAcesso(input);
+        int op = menu.menuAcessoInicial();
+        menu.menuDbImportado();
         Query queries = new Query();
         UserService userControl = new UserService(userOperations);
-
 
 
         //IMPLEMENTAR SAIDA DO PROGRAMA BASEADA EM INPUT!!!!!!
@@ -53,7 +43,7 @@ public class App {
         do{
             userOperations.setDatabaseConnection(conexao);// atualiza para garantir que está na conexão certa
             if(access > 0){
-                dbName = interfaci.menuAcesso2(input);
+                dbName = menu.menuAcesso2(input);
                 dbExistance = database.databaseExists (dbName);
             }
             while(dbExistance == true){                        // se existir
@@ -61,10 +51,10 @@ public class App {
                 conexao.setConfig(infoConexao);                                // atualiza as informações de conexão
                 database.setDbConnection(conexao);                             // atualiza as informações de conexão
 
-                option = interfaci.menuInicial(dbName, input); // exibe o menu inicial
+                option = menu.menuInicial(dbName, input); // exibe o menu inicial
                 if(option == 1){                            // cadastrar
                     User usuarioCadastro = new User();
-                    usuarioCadastro = interfaci.menuCadastro(input, usuarioCadastro);
+                    usuarioCadastro = menu.menuCadastro(input, usuarioCadastro);
                     boolean isRegistered = userControl.registerUser(usuarioCadastro);
                     if(isRegistered == true){   // sucesso no cadastro
                         System.out.println("\nCadastro realizado com sucesso!\n");
@@ -74,7 +64,7 @@ public class App {
                     }
                 }else if( option == 2){                     // login
                     User usuarioLogin = new User();
-                    usuarioLogin = interfaci.menuLogin(input, usuarioLogin);
+                    usuarioLogin = menu.menuLogin(input, usuarioLogin);
                     boolean isLoggedIn = userControl.loginUser(usuarioLogin);
                     if(isLoggedIn == true){
                         System.out.println("\nLogin efetuado com sucesso!");
@@ -83,7 +73,7 @@ public class App {
                         userRole = userControl.getUserRole(usuarioLogin.getUsername());
                         while(isLoggedIn == true){
                             if(userRole.equals("admin")){
-                                choice = interfaci.menuAdministrador(input);
+                                choice = menu.menuAdministrador(input);
                                 switch (choice) {
                                     case "1":
                                         gerenciarDb(input);
@@ -99,7 +89,7 @@ public class App {
                                         break;
                                 }
                             }else if (userRole.equals("manager")){
-                                choice = interfaci.menuGerente(input);
+                                choice = menu.menuGerente(input);
                                 switch (choice) {
                                     case "1":
                                         menuBusca(input);
@@ -115,7 +105,7 @@ public class App {
                                         break;
                                 }
                             }else{ // userRole == employee
-                                choice = interfaci.menuFuncionario(input);
+                                choice = menu.menuFuncionario(input);
                                 switch (choice) {
                                     case "1":
                                         registarVenda(input);
@@ -143,14 +133,14 @@ public class App {
 
                 }
             }if(dbExistance != true){                                          // se o banco informado não existir, 
-                option = interfaci.menuDbNaoExiste(input);  // fornece a opção de tentar novamente inserir o nome ou criar o banco
+                option = menu.menuDbNaoExiste(input);  // fornece a opção de tentar novamente inserir o nome ou criar o banco
                 if(option == 2){                            // opção 2 criar banco
                     //so pessoas com a informação sensivel podem criar
                     infoConexao.setUser("");
                     infoConexao.setPassword("");
 
-                    dbName = interfaci.menuAcesso2(input); // chama o primeiro menu para criar banco, pede para definir o nome
-                    infoConexao = interfaci.menuCriarBanco(input, infoConexao);    // chama o segundo menu para criar banco, solicita o user e password do SGBD
+                    dbName = menu.menuAcesso2(input); // chama o primeiro menu para criar banco, pede para definir o nome
+                    infoConexao = menu.menuCriarBanco(input, infoConexao);    // chama o segundo menu para criar banco, solicita o user e password do SGBD
                     conexao.setConfig(infoConexao);                                // atualiza as informações de conexão
                     database.setDbConnection(conexao);                             // atualiza as informações de conexão
                     try {

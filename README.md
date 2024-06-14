@@ -1,7 +1,7 @@
 # Projeto de E-commerce com Banco de Dados
-# FitDB - Loja de Suplementação
+## FitDB - Loja de Suplementação
 
-# Integrantes
+### Integrantes
 
 - José Franklin Alencar Dantas
 - Marcus Gonçalves

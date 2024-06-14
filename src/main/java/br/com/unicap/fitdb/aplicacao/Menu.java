@@ -210,6 +210,71 @@ public class Menu {
         return choice;
 
     }
+    public void estatisticas (){
+        System.out.println("╔═══════════════════════════════════════════════════╗");
+        System.out.println("║                                                   ║");
+        System.out.println("║                Estatísticas de Vendas             ║");
+        System.out.println("║                                                   ║");
+        System.out.println("╠═══════════════════════════════════════════════════╣");
+        System.out.println("║ 1. Produto mais vendido                           ║");
+        System.out.println("║ 2. Vendedor Associado ao produto mais vendido     ║");
+        System.out.println("║ 3. Valor ganho com o produto mais vendido         ║");
+        System.out.println("║ 4. Meses de mais e de menos vendas                ║");
+        System.out.println("║    do produto mais vendido                        ║");
+        System.out.println("║ 5. Valor ganho com o produto mais vendido         ║");
+        System.out.println("║ 6. Produto menos vendido                          ║");
+        System.out.println("║ 7. Valor ganho com o produto menos vendido        ║");
+        System.out.println("║ 8. Meses de mais e de menos vendas                ║");
+        System.out.println("║    do produto menos vendido                       ║");
+        System.out.println("║ 9. Voltar                                         ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
+
+    }
+
+    public void buscas(){
+        System.out.println("╔═══════════════════════════════════════════════════╗");
+        System.out.println("║                                                   ║");
+        System.out.println("║                      Buscas                       ║");
+        System.out.println("║                                                   ║");
+        System.out.println("╠═══════════════════════════════════════════════════╣");
+        System.out.println("║ 1. Buscar cliente                                 ║");
+        System.out.println("║ 2. Buscar venda                                   ║");
+        System.out.println("║ 3. Buscar produto                                 ║");
+        System.out.println("║ 4. Buscar Funcionário                             ║");
+        System.out.println("║ X. Voltar                                         ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
+
+    }
+
+    public void apagarOpcoes(){
+        System.out.println("╔═══════════════════════════════════════════════════╗");
+        System.out.println("║                                                   ║");
+        System.out.println("║                      Apagar                       ║");
+        System.out.println("║                                                   ║");
+        System.out.println("╠═══════════════════════════════════════════════════╣");
+        System.out.println("║ 1. Apagar cliente                                 ║");
+        System.out.println("║ 2. Apagar venda                                   ║");
+        System.out.println("║ 3. Apagar produto                                 ║");
+        System.out.println("║ 4. Apagar Funcionário                             ║");
+        System.out.println("║ X. Voltar                                         ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
+
+    }
+    public void edicao(){
+        System.out.println("╔═══════════════════════════════════════════════════╗");
+        System.out.println("║                                                   ║");
+        System.out.println("║                      Editar                       ║");
+        System.out.println("║                                                   ║");
+        System.out.println("╠═══════════════════════════════════════════════════╣");
+        System.out.println("║ 1. Editar cliente                                 ║");
+        System.out.println("║ 2. Editar venda                                   ║");
+        System.out.println("║ 3. Editar produto                                 ║");
+        System.out.println("║ 4. Editar Funcionário                             ║");
+        System.out.println("║ X. Voltar                                         ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
+
+    }
+
 
 
 }

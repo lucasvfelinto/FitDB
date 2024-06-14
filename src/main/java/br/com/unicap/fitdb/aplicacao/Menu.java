@@ -23,8 +23,9 @@ public class Menu {
         System.out.println("║ seguindo o exemplo a seguir:        ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("╔═════════════════════════════════════╗");
-        System.out.println("║  nome_do_banco_db                   ║");
+        System.out.println("║  nome_do_banco                      ║");
         System.out.println("╚═════════════════════════════════════╝");
+        System.out.println("use loja_fit");
         System.out.println("\n");
         dbName = input.nextLine();
         System.out.println("\n");
@@ -54,7 +55,7 @@ public class Menu {
         String dbName = new String();
         System.out.println("╔═════════════════════════════════════╗");
         System.out.println("║ Informe o nome do Banco de dados,   ║");
-        System.out.println("║ no formato 'nome_do_banco_db':      ║");
+        System.out.println("║ no formato 'nome_do_banco':         ║");
         System.out.println("╚═════════════════════════════════════╝");
         System.out.println("\n");
         dbName = input.nextLine();

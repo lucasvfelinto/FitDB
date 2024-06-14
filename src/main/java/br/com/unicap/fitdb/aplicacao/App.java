@@ -4,9 +4,10 @@ import java.util.Scanner;
 import main.java.br.com.unicap.fitdb.config.DatabaseConfig;
 import main.java.br.com.unicap.fitdb.db.DatabaseConnection;
 import main.java.br.com.unicap.fitdb.db.DatabaseHandler;
+import main.java.br.com.unicap.fitdb.aplicacao.Menu;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String url; // iniciar com o url
         String user = "root";
         String password; // iniciar com a password
@@ -16,7 +17,9 @@ public class App {
         boolean systemStatus = true;
         boolean dbExistance = false;
         Scanner input = new Scanner(System.in);
-        Menu interfaci = new Menu(); //interfaci pq com e é palavra reservada
+        Menu menu = new Menu(); //interfaci pq com e é palavra reservada
+        menu.menuDbImportado();
+    
         // DatabseConfig é um objeto que encapsula as informações de configuração necessárias para se conectar ao SGBD. 
         DatabaseConfig infoConexao = new DatabaseConfig(url,user,password);
         // DatabaseConnection é um objeto que irá utilizar as informações do objeto DatabaseConfig numa instância do DriverManger
@@ -25,7 +28,7 @@ public class App {
         // DataBaseHandler usa a conexão estabelecida pelo DatabaseConnection,
         DatabaseHandler database = new DatabaseHandler(conexao);
         //pergunta o nome da db para o usuário
-        dbName = interfaci.menuAcesso(input);
+        dbName = menu.menuAcesso(input);
 
         do{
             if(access > 0){

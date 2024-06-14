@@ -190,8 +190,16 @@ public class Query {
         + "('Ricardo Sampaio', 'M', 37, '1987-11-30'),\n"
         + "('Sabrina Lemos', 'F', 30, '1994-09-26'),\n"
         + "('Tiago Oliveira', 'M', 32, '1992-06-04'),\n"
+        + "('Marne Jose', 'M', 68, '1962-12-21'),\n"
+        + "('Bia Lorena', 'F', 23, '2000-12-01'),\n"
+        + "('Matheus Lira', 'M', 22, '2001-07-11'),\n"
         + "('Úrsula Cunha', 'F', 29, '1995-12-22'),\n"
         + "('Vitor Menezes', 'M', 26, '1998-01-18');\n";
+
+        String createUser1 = "INSERT INTO usuarios (username, password, role) VALUES ('admin_user', 'admin_password', 'admin');";
+        String createUser2 = "INSERT INTO usuarios (username, password, role) VALUES ('manager_user', 'manager_password', 'manager');";
+        String createUser3 = "INSERT INTO usuarios (username, password, role) VALUES ('employee_user', 'employee_password', 'employee');";
+
     
         String createTrigger1 = "CREATE TRIGGER atualiza_apos_inserir_venda\n"
         + "AFTER INSERT ON venda\n"
@@ -241,15 +249,47 @@ public class Query {
         + "END;\n";
 
 
+    // o propósito é para os usuários na tabela user terem a logica de privilegios, mas nao vai dar tempo, entao criei esses que podem ser logados pelo phpMyAdmin
+    String createAdminUser = 
+        "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminpassword';";
+    
+    String grantAdminPrivileges =
+        "GRANT ALL PRIVILEGES ON loja_fit.* TO 'admin'@'localhost';";
+    
 
-    /* 
-    String createUsers = "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminpassword';\n"
-        + "GRANT ALL PRIVILEGES ON loja_fit.* TO 'admin'@'localhost';\n"
-        + "CREATE USER 'manager'@'localhost' IDENTIFIED BY 'managerpassword';\n"
-        + "GRANT SELECT, DELETE, UPDATE ON loja_fit.* TO 'manager'@'localhost';\n"
-        + "CREATE USER 'employee'@'localhost' IDENTIFIED BY 'employeepassword';\n"
-        + "GRANT INSERT, SELECT ON loja_fit.* TO 'employee'@'localhost';\n";
-    */
+    String createManagerUser = 
+        "CREATE USER 'manager'@'localhost' IDENTIFIED BY 'managerpassword';"; // deu problema, nao tive tempo de investigar melhor, nao incluí
+    
+    String grantManagerPrivileges1 =
+        "GRANT SELECT, UPDATE, DELETE ON loja_fit.cliente TO 'manager'@'localhost';";
+    
+    String grantManagerPrivileges2 =
+        "GRANT SELECT, UPDATE, DELETE ON loja_fit.clienteespecial TO 'manager'@'localhost';";
+    
+    String grantManagerPrivileges3 =
+        "GRANT SELECT, UPDATE, DELETE ON loja_fit.produto TO 'manager'@'localhost';";
+    
+    String grantManagerPrivileges4 =
+        "GRANT SELECT, UPDATE, DELETE ON loja_fit.venda TO 'manager'@'localhost';";
+    
+    String grantManagerPrivileges5 =
+        "GRANT SELECT, UPDATE, DELETE ON loja_fit.funcionario TO 'manager'@'localhost';";
+    
+    String grantManagerPrivileges6 =
+        "GRANT SELECT, UPDATE, DELETE ON loja_fit.funcionarioespecial TO 'manager'@'localhost';";
+      
+    String createEmployeeUser = 
+        "CREATE USER 'employee'@'localhost' IDENTIFIED BY 'employeepassword';";
+    
+    String grantEmployeePrivileges1 =
+        "GRANT SELECT, INSERT ON loja_fit.produto TO 'employee'@'localhost';";
+    
+    String grantEmployeePrivileges2 =
+        "GRANT SELECT, INSERT ON loja_fit.cliente TO 'employee'@'localhost';";
+    
+    String grantEmployeePrivileges3 =
+        "GRANT SELECT, INSERT ON loja_fit.venda TO 'employee'@'localhost';";
+    
     String createView1 = "CREATE VIEW produtos_mais_vendidos AS\n"
         + "SELECT p.nome, COUNT(v.id) AS total_vendas\n"
         + "FROM produto p\n"
@@ -451,6 +491,15 @@ String createProcedure5 = "CREATE PROCEDURE Estatisticas()\n"
                 insertProdutos,
                 insertFuncionarios,
                 insertClientes,
+                createUser1,
+                createUser2,
+                createUser3,
+                createAdminUser,
+                grantAdminPrivileges,
+                createEmployeeUser,
+                grantEmployeePrivileges1,
+                grantEmployeePrivileges2,
+                grantEmployeePrivileges3,
                 createView1,
                 createView2,
                 createView3,
@@ -468,9 +517,3 @@ String createProcedure5 = "CREATE PROCEDURE Estatisticas()\n"
         
 }
 
-/*
- *              createTriggers,
-                createUsers,
-                createViews,
-                createProcedures
- */

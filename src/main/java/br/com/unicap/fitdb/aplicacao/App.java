@@ -31,9 +31,6 @@ public class App {
         Query queries = new Query();
         UserService userControl = new UserService(userOperations);
 
-        System.out.println(infoConexao.getUrl());
-        System.out.println(infoConexao.getUser());
-        System.out.println(infoConexao.getPassword());
 
         //IMPLEMENTAR SAIDA DO PROGRAMA BASEADA EM INPUT!!!!!!
 
@@ -46,6 +43,7 @@ public class App {
             userOperations.setDatabaseConnection(conexao);// atualiza para garantir que está na conexão certa
             if(access > 0){
                 dbName = interfaci.menuAcesso2(input);
+                dbExistance = database.databaseExists (dbName);
             }
             while(dbExistance == true){                        // se existir
                 System.out.println(infoConexao.getUrl());
@@ -73,7 +71,7 @@ public class App {
                         String choice = new String();
                         userRole = userControl.getUserRole(usuarioLogin.getUsername());
                         while(isLoggedIn == true){
-                            if(userRole == "admin"){
+                            if(userRole.equals("admin")){
                                 choice = interfaci.menuAdministrador(input);
                                 switch (choice) {
                                     case "1":
@@ -89,7 +87,7 @@ public class App {
                                         isLoggedIn = false;
                                         break;
                                 }
-                            }else if (userRole == "manager"){
+                            }else if (userRole.equals("manager")){
                                 choice = interfaci.menuGerente(input);
                                 switch (choice) {
                                     case "1":
@@ -109,13 +107,16 @@ public class App {
                                 choice = interfaci.menuFuncionario(input);
                                 switch (choice) {
                                     case "1":
-                                        menuBusca(input);
+                                        registarVenda(input);
                                         break;
                                     case "2":
-                                        menuEdicao(input);
+                                        consultarVendas(input);
                                         break;
                                     case "3":
-                                        menuApagar(input);
+                                        cadastrarCliente(input);
+                                        break;
+                                    case "4":
+                                        cadastrarProduto(input);
                                         break;
                                     default: //x ou X
                                         isLoggedIn = false;
@@ -144,6 +145,7 @@ public class App {
                     try {
                         database.createDatabase(dbName);                           // tenta criar o banco de dados
                         database.executeQueries(queries.sqlQueries); // queries automatizadas de inicialização do e-commerce
+                        infoConexao.setUrl(infoConexao.getUrl()+"/"+dbName);
                     }catch (SQLException e) {
                         System.out.println("Houve um erro ao criar o banco de dados");
                         System.out.println(e);
